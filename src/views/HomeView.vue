@@ -1,24 +1,41 @@
 <template>
   <header>
-    <div class="header__content">
-      <img src="../assets/img/cupcake.png" class="bat__img" alt="">
-      <div class="menu__btn">
+    <div class="header-content">
+      <img src="../assets/img/cupcake.png" class="bat-img" alt="">
+      <div class="menu-btn">
         <i class="fa-solid fa-bars"></i>
         <h5>Menu</h5>
       </div>
     </div>
   </header>
   <main>
-    <div class="main__container">
+    <div class="main-container">
       <aside class="nav-sidebar">
         <ul class="list-sidebar">
           <li>
-            <h5><span>T</span></h5>
-            <h4>thienpro</h4>
+            <RouterLink :to="{ name: 'home' }" class="item-sidebar">
+              <div class="icon-and-title">
+                <h5><span class="shortcut">T</span></h5>
+                <h4>thienpro</h4>
+              </div>
+            </RouterLink>
           </li>
           <li>
-            <i class="fa-solid fa-folder-open"></i>
-            <h5>Issues</h5>
+            <RouterLink :to="{ name: 'home' }" class="item-sidebar">
+              <div class="icon-and-title">
+                <i class="fa-solid fa-folder-open"></i>
+                <h5>Issues</h5>
+              </div>
+              <span>5</span>
+            </RouterLink>
+            <ul class="content-in-item">
+              <li>
+                <RouterLink :to="{ name: 'home' }">List</RouterLink>
+              </li>
+              <li>
+                <RouterLink :to="{ name: 'home' }">Broad</RouterLink>
+              </li>
+            </ul>
           </li>
         </ul>
       </aside>
@@ -31,18 +48,18 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <style lang="scss">
-.header__content {
+.header-content {
   background-color: rgb(49, 2, 87);
   display: flex;
   align-items: center;
   padding: .3rem .6rem;
 
-  .bat__img {
+  .bat-img {
     width: 3.8rem;
     height: 3.8rem;
   }
 
-  .menu__btn {
+  .menu-btn {
     font-size: large;
     color: white;
     display: flex;
@@ -51,13 +68,15 @@ import { RouterLink } from 'vue-router';
   }
 }
 
-.main__container {
+.main-container {
   width: 100%;
 
+
   .nav-sidebar {
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(243, 243, 243);
     width: 17rem;
-    height: 100vh;
+    position: fixed;
+    height: 100%;
 
     .list-sidebar {
       display: flex;
@@ -67,26 +86,10 @@ import { RouterLink } from 'vue-router';
       padding: 1rem;
 
       li {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        padding: .8rem;
-        gap: .6rem;
-        border-radius: 5px;
-
-        h4 {
-          font-weight: bold;
-        }
-
-        span {
-          background-color: rgb(255, 219, 225);
-          padding: .5rem .8rem;
+        .shortcut {
+          background-color: rgb(255, 227, 231);
+          padding: .4rem .8rem;
           border-radius: 5px;
-        }
-
-        &:hover {
-          background-color: rgb(218, 218, 218);
-          cursor: pointer;
         }
       }
     }

@@ -1,1 +1,47 @@
 /*Components: anything reusable such as buttons, navbar, cards etc. */
+.icon-and-title {
+  display: flex;
+  gap: .5rem;
+}
+
+.item-sidebar {
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: .5rem;
+  font-size: 1rem;
+  color: rgb(88, 88, 88);
+
+  span {
+    background-color: rgb(172, 229, 255);
+    width: 1.1rem;
+    font-size: .8rem;
+    border-radius: 7px;
+    text-align: center;
+  }
+
+  &:hover {
+    background-color: rgb(218, 218, 218);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+.content-in-item {
+  display: flex;
+  flex-direction: column;
+  font-size: .9rem;
+
+  li {
+    text-decoration: none;
+    list-style: none;
+
+    &:hover {
+      background-color: rgb(218, 218, 218);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
