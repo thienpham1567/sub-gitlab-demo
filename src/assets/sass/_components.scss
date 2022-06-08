@@ -1,18 +1,21 @@
 /*Components: anything reusable such as buttons, navbar, cards etc. */
 .icon-and-title {
   display: flex;
+  align-items: center;
   gap: .5rem;
 }
 
 .item-sidebar {
-  text-decoration: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  padding: .5rem;
   font-size: 1rem;
+  padding: .5rem;
   color: rgb(88, 88, 88);
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: .1rem;
 
   span {
     background-color: rgb(172, 229, 255);
@@ -23,25 +26,37 @@
   }
 
   &:hover {
-    background-color: rgb(218, 218, 218);
+    background-color: rgb(228, 228, 228);
     border-radius: 5px;
-    cursor: pointer;
   }
 }
 
 .content-in-item {
+  width: 100%;
   display: flex;
   flex-direction: column;
   font-size: .9rem;
+  cursor: pointer;
+  text-decoration: none;
 
   li {
-    text-decoration: none;
     list-style: none;
+    padding: .5rem 2.1rem;
+    margin-bottom: .1rem;
 
     &:hover {
-      background-color: rgb(218, 218, 218);
+      background-color: rgb(228, 228, 228);
       border-radius: 5px;
-      cursor: pointer;
     }
   }
+}
+
+.active-item {
+  font-weight: bold;
+}
+
+.active {
+  font-weight: bold;
+  background-color: rgb(228, 228, 228);
+  border-radius: 5px;
 }

@@ -20,16 +20,16 @@
               </div>
             </RouterLink>
           </li>
-          <li>
+          <li @click="makeClick">
             <RouterLink :to="{ name: 'home' }" class="item-sidebar">
               <div class="icon-and-title">
                 <i class="fa-solid fa-folder-open"></i>
-                <h5>Issues</h5>
+                <h5 :class="{ 'active-item': isClicked }">Issues</h5>
               </div>
               <span>5</span>
             </RouterLink>
-            <ul class="content-in-item">
-              <li>
+            <ul v-if="isClicked" class="content-in-item">
+              <li :class="{ 'active': isClicked }">
                 <RouterLink :to="{ name: 'home' }">List</RouterLink>
               </li>
               <li>
@@ -38,6 +38,11 @@
             </ul>
           </li>
         </ul>
+        <div class="icon-and-title collapse">
+          <i v-if="isCollapse" @click="" class="fa-solid fa-angles-right"></i>
+          <i v-else @click="" class="fa-solid fa-angles-left"></i>
+          <span>Collapse sidebar</span>
+        </div>
       </aside>
     </div>
   </main>
@@ -45,6 +50,12 @@
 
 <script setup>
 import { RouterLink } from 'vue-router';
+import { ref } from 'vue';
+
+const isClicked = ref(true);
+const isCollapse = ref(false);
+
+const makeClick = () => isClicked.value = !isClicked.value;
 </script>
 
 <style lang="scss">
@@ -71,12 +82,13 @@ import { RouterLink } from 'vue-router';
 .main-container {
   width: 100%;
 
-
   .nav-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: rgb(243, 243, 243);
     width: 17rem;
-    position: fixed;
-    height: 100%;
+    height: 100vh;
 
     .list-sidebar {
       display: flex;
@@ -91,6 +103,15 @@ import { RouterLink } from 'vue-router';
           padding: .4rem .8rem;
           border-radius: 5px;
         }
+      }
+    }
+
+    .collapse {
+      padding: .5rem 1rem;
+
+      &:hover {
+        background-color: rgb(228, 228, 228);
+        border-radius: 5px;
       }
     }
 
