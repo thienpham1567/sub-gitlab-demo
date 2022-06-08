@@ -10,26 +10,26 @@
   </header>
   <main>
     <div class="main-container">
-      <aside class="nav-sidebar">
+      <aside :class="{ collapsed: isCollapsed }" class="nav-sidebar">
         <ul class="list-sidebar">
           <li>
             <RouterLink :to="{ name: 'home' }" class="item-sidebar">
+              <span class="shortcut icon">T</span>
               <div class="icon-and-title">
-                <h5><span class="shortcut">T</span></h5>
                 <h4>thienpro</h4>
               </div>
             </RouterLink>
           </li>
-          <li @click="makeClick">
+          <li @click="makeClickItem">
             <RouterLink :to="{ name: 'home' }" class="item-sidebar">
+              <span class="icon"><i class="fa-solid fa-folder-open"></i></span>
               <div class="icon-and-title">
-                <i class="fa-solid fa-folder-open"></i>
-                <h5 :class="{ 'active-item': isClicked }">Issues</h5>
+                <h5 :class="{ 'active-item': isClickedItem }">Issues</h5>
+                <span class="issues-counter">5</span>
               </div>
-              <span>5</span>
             </RouterLink>
-            <ul v-if="isClicked" class="content-in-item">
-              <li :class="{ 'active': isClicked }">
+            <ul v-if="isClickedItem" class="content-in-item">
+              <li>
                 <RouterLink :to="{ name: 'home' }">List</RouterLink>
               </li>
               <li>
@@ -38,12 +38,17 @@
             </ul>
           </li>
         </ul>
-        <div class="icon-and-title collapse">
-          <i v-if="isCollapse" @click="" class="fa-solid fa-angles-right"></i>
-          <i v-else @click="" class="fa-solid fa-angles-left"></i>
-          <span>Collapse sidebar</span>
+        <div class="collapse-btn" @click="collapseSidebar">
+          <span v-if="isCollapsed" class="icon"> <i class="fa-solid fa-angles-right"></i></span>
+          <span v-else class="icon"> <i class="fa-solid fa-angles-left"></i></span>
+          <div class="icon-and-title">
+            <span>Collapse sidebar</span>
+          </div>
         </div>
       </aside>
+      <div class="content-container">
+        <h1>Content</h1>
+      </div>
     </div>
   </main>
 </template>
@@ -52,22 +57,29 @@
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
 
-const isClicked = ref(true);
-const isCollapse = ref(false);
+const isClickedItem = ref(false);
+const isCollapsed = ref(false);
 
-const makeClick = () => isClicked.value = !isClicked.value;
+const makeClickItem = () => isClickedItem.value = true;
+const collapseSidebar = () => isCollapsed.value = !isCollapsed.value;
+
+
+
+
 </script>
 
 <style lang="scss">
 .header-content {
-  background-color: rgb(49, 2, 87);
+  background-color: rgb(65, 0, 117);
   display: flex;
   align-items: center;
-  padding: .3rem .6rem;
+  padding: .2rem .4rem;
+  //position: fixed;
+  width: 100%;
 
   .bat-img {
-    width: 3.8rem;
-    height: 3.8rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   .menu-btn {
@@ -80,15 +92,11 @@ const makeClick = () => isClicked.value = !isClicked.value;
 }
 
 .main-container {
-  width: 100%;
+  display: flex;
 
   .nav-sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     background-color: rgb(243, 243, 243);
-    width: 17rem;
-    height: 100vh;
+    width: 20%;
 
     .list-sidebar {
       display: flex;
@@ -100,14 +108,20 @@ const makeClick = () => isClicked.value = !isClicked.value;
       li {
         .shortcut {
           background-color: rgb(255, 227, 231);
-          padding: .4rem .8rem;
           border-radius: 5px;
         }
       }
     }
 
-    .collapse {
+    .collapse-btn {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 27.8em;
+      border-top: 1px solid rgb(228, 228, 228);
       padding: .5rem 1rem;
+      cursor: pointer;
+
 
       &:hover {
         background-color: rgb(228, 228, 228);
@@ -115,6 +129,13 @@ const makeClick = () => isClicked.value = !isClicked.value;
       }
     }
 
+  }
+
+  .content-container {
+    background-color: rgb(161, 255, 255);
+    width: 100%;
+    display: block;
+    padding: 0 15rem;
   }
 }
 </style>

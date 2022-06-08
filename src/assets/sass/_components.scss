@@ -1,13 +1,16 @@
 /*Components: anything reusable such as buttons, navbar, cards etc. */
 .icon-and-title {
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: .5rem;
+  justify-content: space-between;
+}
+
+.icon {
+  width: 2rem;
 }
 
 .item-sidebar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   text-align: center;
   font-size: 1rem;
@@ -16,8 +19,9 @@
   cursor: pointer;
   text-decoration: none;
   margin-bottom: .1rem;
+  gap: .5rem;
 
-  span {
+  .issues-counter {
     background-color: rgb(172, 229, 255);
     width: 1.1rem;
     font-size: .8rem;
@@ -59,4 +63,23 @@
   font-weight: bold;
   background-color: rgb(228, 228, 228);
   border-radius: 5px;
+}
+
+.inactive {
+  font-weight: normal;
+  background-color: rgb(243, 243, 243);
+}
+
+.collapsed {
+  width: 5% !important;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-and-title {
+    display: none;
+  }
 }
