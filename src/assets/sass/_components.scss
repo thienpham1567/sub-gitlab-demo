@@ -6,7 +6,7 @@
 }
 
 .icon {
-  width: 2rem;
+  width: 2.5rem;
 }
 
 .item-sidebar {
@@ -36,7 +36,6 @@
 }
 
 .content-in-item {
-  width: 100%;
   display: flex;
   flex-direction: column;
   font-size: .9rem;
@@ -71,15 +70,18 @@
 }
 
 .collapsed {
-  width: 5% !important;
+  width: 6% !important;
+  transition: all 0.5s ease-in-out;
 
-  .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .content-in-item {
+    display: none;
   }
 
   .icon-and-title {
     display: none;
+  }
+
+  .icon {
+    text-align: center;
   }
 }
