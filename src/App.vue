@@ -1,15 +1,28 @@
 <template>
-
-  <RouterView />
+  <header>
+    <Navigation />
+  </header>
+  <main>
+    <div class="main-container">
+      <aside :class="{ collapsed: isCollapsed }" class="sidebar">
+        <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" />
+      </aside>
+      <div class="view-pages">
+        <RouterView />
+      </div>
+    </div>
+  </main>
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import { useStore } from 'vuex';
-import { computed } from '@vue/reactivity';
+import Navigation from './components/Navigation.vue';
+import Sidebar from './components/Sidebar.vue';
+import { RouterView } from 'vue-router'
+import { ref } from 'vue';
 
-const store = useStore();
+const isCollapsed = ref(false);
 
+const collapsed = () => isCollapsed.value = !isCollapsed.value;
 
 </script>
 
@@ -20,5 +33,19 @@ const store = useStore();
   margin: 0;
   padding: 0;
   font-weight: normal;
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+
+  .sidebar {
+    width: 20%;
+  }
+
+  .view-pages {
+    width: 100%;
+  }
+
 }
 </style>
