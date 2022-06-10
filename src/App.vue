@@ -22,7 +22,10 @@ import { ref } from 'vue';
 
 const isCollapsed = ref(false);
 
-const collapsed = () => isCollapsed.value = !isCollapsed.value;
+const collapsed = () => {
+  console.log("App.vue");
+  isCollapsed.value = !isCollapsed.value;
+}
 
 </script>
 
@@ -41,6 +44,7 @@ const collapsed = () => isCollapsed.value = !isCollapsed.value;
 
   .sidebar {
     width: 20%;
+    transition: all 0.5s ease-in-out;
   }
 
   .view-pages {

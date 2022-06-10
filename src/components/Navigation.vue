@@ -18,8 +18,8 @@
   display: flex;
   align-items: center;
   padding: .2rem .4rem;
-  //position: fixed;
   width: 100%;
+  color: white;
 
   .bat-img {
     width: 3.5rem;
@@ -29,7 +29,6 @@
 
   .menu-btn {
     font-size: large;
-    color: white;
     display: flex;
     gap: .4rem;
     margin-left: 1rem;

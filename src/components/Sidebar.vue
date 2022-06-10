@@ -39,17 +39,17 @@
 
 <script setup>
 import { ref } from 'vue';
-import { defineEmits } from 'vue';
 
 const props = defineProps({
   isCollapsed: Boolean
 });
-const emit = defineEmits(['collapseSidebar'])
+const emit = defineEmits(['collapsedSidebar']);
 const isClickedItem = ref(false);
 
 const makeClickItem = () => isClickedItem.value = true;
 const makeCollapsed = () => {
-  emit('collapseSidebar', {});
+  console.log("makeCollapsed");
+  emit('collapsedSidebar');
 }
 
 </script>
@@ -57,6 +57,7 @@ const makeCollapsed = () => {
 <style lang="scss" scoped>
 .nav-sidebar {
   background-color: rgb(243, 243, 243);
+  color: rgb(85, 85, 85);
 
   .list-sidebar {
     display: flex;

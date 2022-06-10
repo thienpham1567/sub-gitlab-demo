@@ -1,11 +1,7 @@
 <template>
-  <main>
-
-    <div class="content-container">
-      <RouterView />
-    </div>
-
-  </main>
+  <div class="content-container">
+    <RouterView />
+  </div>
 </template>
 
 <script setup>

@@ -26,7 +26,22 @@
           </li>
         </ul>
         <div class="nav-controls">
-
+          <RouterLink :to="{ name: 'home' }" class="btn">
+            <i class="fa-solid fa-wifi"></i>
+          </RouterLink>
+          <RouterLink :to="{ name: 'home' }" class="btn">
+            <i class="fa-solid fa-calendar-week"></i>
+          </RouterLink>
+          <div class="import-export">
+            <RouterLink :to="{ name: 'home' }" class="btn">
+              <i class="fa-solid fa-file-import"></i>
+            </RouterLink>
+            <RouterLink :to="{ name: 'home' }" class="btn">
+              <i class="fa-solid fa-file-export"></i>
+            </RouterLink>
+          </div>
+          <button class="btn issue-btn ">Edit issues</button>
+          <RouterLink :to="{ name: home }" class="issue-btn new-btn">New issus</RouterLink>
         </div>
       </div>
     </div>
@@ -45,14 +60,14 @@ const route = useRoute();
 .bread-crumb {
   list-style: none;
   padding: .5rem 0 1rem 0;
-  color: rgb(95, 95, 95);
+  color: rgb(85, 85, 85);
 
   li {
     display: inline;
 
     a {
       text-decoration: none;
-      color: rgb(95, 95, 95);
+      color: rgb(85, 85, 85);
 
       &:hover {
         color: black;
@@ -69,8 +84,12 @@ const route = useRoute();
 
 .issuable-list-container {
   display: block;
+  color: rgb(85, 85, 85);
 
   .top-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-top: 1px solid rgb(199, 199, 199);
     border-bottom: 1px solid rgb(199, 199, 199);
 
@@ -81,6 +100,7 @@ const route = useRoute();
         list-style: none;
         padding: 1rem .7rem;
         cursor: pointer;
+        border: 2px solid white;
 
         &:hover {
           border-bottom: 2px solid rgb(199, 199, 199);
@@ -98,7 +118,28 @@ const route = useRoute();
       }
     }
 
-    .nav-controls {}
+    .nav-controls {
+      display: flex;
+      gap: .5rem;
+
+      a {
+        color: rgb(85, 85, 85);
+        text-decoration: none;
+      }
+
+      .import-export {
+        display: flex;
+
+        :nth-child(1) {
+          border-radius: 5px 0px 0px 5px;
+        }
+
+        :nth-child(2) {
+          border-radius: 0px 5px 5px 0px;
+          border-left: none;
+        }
+      }
+    }
   }
 }
 </style>
