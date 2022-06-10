@@ -95,12 +95,35 @@
   width: 2.5rem;
   height: 2.5rem;
   border: 1px solid rgb(199, 199, 199);
+  background-color: white;
   padding: .5rem;
   border-radius: 5px;
 
   &:hover {
     background-color: rgb(199, 199, 199);
   }
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  gap: .6rem;
+  border: 1px solid grey;
+  padding: .5rem;
+  border-radius: 5px 0px 0px 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(199, 199, 199);
+  }
+}
+
+.btn-helper {
+  border: 1px solid grey;
+  border-radius: 0px 5px 5px 0px;
+  border-left: none;
 }
 
 .issue-btn {
