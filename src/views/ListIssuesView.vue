@@ -60,14 +60,40 @@
         </div>
         <div class="sort-dropdown-container">
           <div class="btn-group">
-            <span>Priority</span>
+            <span>Title</span>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="btn btn-helper">
-            <i v-if="isAscOrder" class="fa-solid fa-arrow-down-wide-short"></i>
-            <i v-else class="fa-solid fa-arrow-up-short-wide"></i>
+            <i v-if="isAscOrder" class="fa-solid fa-arrow-up-short-wide"></i>
+            <i v-else class="fa-solid fa-arrow-down-wide-short"></i>
           </div>
         </div>
+      </div>
+      <ul class="issues-list">
+        <li v-for="(issue, index) in store.getters.issuesList" :key="index" class="issue">
+          <div class="issuable-main-info">
+            <div class="issue-title">
+              <RouterLink :to="{ name: 'home' }">{{ issue.title }}</RouterLink>
+            </div>
+            <div class="issuable-info">
+              <span>#{{ index + 1 }}</span>
+              <span>.</span>
+              <span>created 5 days ago by Thien Pham Ngoc</span>
+            </div>
+          </div>
+          <div class="issuable-meta">
+            <div class="comments">
+              <i class="fa-solid fa-comments"></i>
+              <span>0</span>
+            </div>
+            <div class="update-history">
+              <span>updated just now</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="link">
+        <button class="btn btn-link">Email a new issue to this project</button>
       </div>
     </div>
   </div>
@@ -77,7 +103,10 @@
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
+import { useStore } from 'vuex';
+import { computed } from '@vue/reactivity';
 
+const store = useStore();
 const route = useRoute();
 const isAscOrder = ref(true);
 
@@ -174,55 +203,122 @@ const isAscOrder = ref(true);
       }
     }
   }
-}
 
-.filtered-search-input-container {
-  display: flex;
-  background-color: rgb(248, 248, 248);
-  border-bottom: 1px solid rgb(199, 199, 199);
-  gap: 1rem;
-  padding: 1.1rem;
-
-  .issuable-search-container {
+  .filtered-search-input-container {
     display: flex;
-    background-color: white;
-    width: 100%;
+    background-color: rgb(240, 240, 240);
+    border-bottom: 1px solid rgb(199, 199, 199);
+    gap: 1rem;
+    padding: 1.1rem;
 
-    .search-history {
-      width: 8%;
+    .issuable-search-container {
+      display: flex;
+      background-color: white;
+      width: 100%;
 
-      &:hover {
-        background-color: rgb(226, 226, 226);
+      .search-history {
+        width: 8%;
+
+        &:hover {
+          background-color: rgb(226, 226, 226);
+        }
+
+        :nth-child(1) {
+          font-size: 1.1rem;
+        }
+
+        :nth-child(2) {
+          font-size: .7rem;
+        }
       }
 
-      :nth-child(1) {
-        font-size: 1.1rem;
-      }
+      .filtered-search-input {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 95%;
+        border: 1px solid grey;
+        padding: .5rem;
+        border-left: none;
 
-      :nth-child(2) {
-        font-size: .7rem;
+        input {
+          width: 100%;
+          border: none;
+          outline: none;
+        }
       }
     }
 
-    .filtered-search-input {
+    .sort-dropdown-container {
+      display: flex;
+    }
+  }
+
+  .issues-list {
+    background-color: rgb(250, 250, 250);
+    width: 100%;
+    list-style: none;
+
+    .issue {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 95%;
-      border: 1px solid grey;
-      padding: .5rem;
-      border-left: none;
+      padding: .8rem 1rem;
+      border-bottom: 1px solid rgb(199, 199, 199);
 
-      input {
-        width: 100%;
-        border: none;
-        outline: none;
+
+      .issuable-main-info {
+
+        .issuable-title,
+        a {
+          display: block;
+          text-decoration: none;
+          color: black;
+          margin-bottom: .2rem;
+
+          &:hover {
+            text-decoration: underline;
+            color: rgb(0, 68, 255);
+          }
+
+        }
+
+        .issuable-info {
+          span {
+            margin-right: .3rem;
+          }
+        }
+      }
+
+      .issuable-meta {
+        .comments {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: .3rem;
+        }
+      }
+
+    }
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+
+    .btn-link {
+      border: none;
+      width: 15rem;
+      color: rgb(0, 68, 255);
+
+      &:hover {
+        text-decoration: underline;
+        background-color: white;
       }
     }
   }
 
-  .sort-dropdown-container {
-    display: flex;
-  }
 }
 </style>
