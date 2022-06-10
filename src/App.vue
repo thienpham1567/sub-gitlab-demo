@@ -38,18 +38,19 @@ const collapsed = () => {
   font-weight: normal;
 }
 
+header {}
+
 .main-container {
   display: flex;
   width: 100%;
 
   .sidebar {
     width: 20%;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 
   .view-pages {
     width: 100%;
   }
-
 }
 </style>

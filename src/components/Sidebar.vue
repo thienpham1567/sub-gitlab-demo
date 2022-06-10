@@ -13,8 +13,8 @@
         <RouterLink :to="{ name: 'issues' }" class="item-sidebar">
           <span class="icon"><i class="fa-solid fa-folder-open"></i></span>
           <div class="icon-and-title">
-            <h5 :class="{ 'active-item': isClickedItem }">Issues</h5>
-            <span class="issues-counter">5</span>
+            <RouterLink :to="{ name: 'issues' }" :class="{ 'active-item': isClickedItem }">Issues</RouterLink>
+            <span class="issues-counter">{{ store.getters.lengthIssuesList }}</span>
           </div>
         </RouterLink>
         <ul v-if="isClickedItem" class="content-in-item">
@@ -38,13 +38,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useStore } from 'vuex';
 
 const props = defineProps({
   isCollapsed: Boolean
 });
+const store = useStore();
 const emit = defineEmits(['collapsedSidebar']);
 const isClickedItem = ref(false);
+const innerWidth = window.innerWidth;
+
+watch(innerWidth, () => {
+  if (innerWidth <= 768) {
+    emit('collapsedSidebar');
+  }
+})
 
 const makeClickItem = () => isClickedItem.value = true;
 const makeCollapsed = () => {
@@ -90,6 +99,31 @@ const makeCollapsed = () => {
       border-radius: 3px;
     }
   }
+}
+
+@media only screen and (max-width:768px) {
+  // .nav-sidebar {
+  //   .list-sidebar {
+  //     display: flex;
+  //     align-items: center;
+  //     width: 2.5rem;
+
+  //     .icon-and-title {
+  //       display: none;
+  //     }
+
+  //     .content-in-item {
+  //       display: none;
+  //     }
+
+  //   }
+
+  //   .collapse-btn {
+  //     .icon-and-title {
+  //       display: none;
+  //     }
+  //   }
+  // }
 
 }
 </style>

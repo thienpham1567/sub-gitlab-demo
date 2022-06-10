@@ -13,7 +13,7 @@ import { RouterView } from 'vue-router';
 .content-container {
   width: 100%;
   display: block;
-  padding: .5rem 10rem;
+  padding: .5rem 7rem;
   font-size: .9rem;
 }
 </style>
