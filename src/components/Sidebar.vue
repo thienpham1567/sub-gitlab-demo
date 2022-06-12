@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-icon">
+  <div class="sidebar-container">
     <ul class=" list-sidebar">
       <li>
         <RouterLink :to="{ name: 'home' }" class="item-sidebar wider">
@@ -17,6 +17,14 @@
             <span class="counter">{{ store.getters.lengthIssuesList }}</span>
           </div>
         </RouterLink>
+        <ul v-if="isClickedItem" class="content-in-item">
+          <li>
+            <RouterLink :to="{ name: 'issues' }">List</RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="{ name: 'home' }">Broad</RouterLink>
+          </li>
+        </ul>
       </li>
     </ul>
     <div class="collapse-btn" @click="makeCollapsed">
@@ -48,11 +56,11 @@ const makeCollapsed = () => {
 
 </script>
 
-<style lang="scss" scoped>
-.sidebar-icon {
+<style lang="scss">
+.sidebar-container {
   width: 100%;
   background-color: rgb(245, 245, 245);
-  height: 36.55rem;
+  height: 100vh;
   display: flex;
   padding: 0 .5rem;
   flex-direction: column;
@@ -60,6 +68,8 @@ const makeCollapsed = () => {
   justify-content: space-between;
 
   .list-sidebar {
+    width: 100%;
+    height: 94%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,6 +108,20 @@ const makeCollapsed = () => {
       }
     }
 
+  }
+
+  .collapse-btn {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 6%;
+    align-items: center;
+    gap: 1rem;
+    padding: .7rem 1rem;
+
+    &:hover {
+      background-color: rgb(228, 228, 228);
+    }
   }
 }
 

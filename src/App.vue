@@ -40,9 +40,10 @@ const collapsed = () => {
 .main-container {
   display: flex;
   width: 100%;
+  height: 100%;
 
   .sidebar {
-    width: 18%;
+    width: 20%;
     transition: all 0.3s ease-in-out;
   }
 
@@ -53,19 +54,18 @@ const collapsed = () => {
 
 @media screen and (max-width:1200px) {
   .sidebar-mobile {
-    background-color: aqua;
     width: 7% !important;
     transition: all 0.3s ease-in-out;
 
-    .content {
-      display: none;
-    }
+    .sidebar-container {
 
-    .collapse-btn {
-      width: 6rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      .content-in-item {
+        display: none;
+      }
+
+      .content {
+        display: none;
+      }
     }
   }
 }

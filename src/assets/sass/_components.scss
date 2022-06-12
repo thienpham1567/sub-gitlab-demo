@@ -1,16 +1,4 @@
 /*Components: anything reusable such as buttons, navbar, cards etc. */
-.collapse-btn {
-  width: 15.3rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: .7rem 1rem;
-
-  &:hover {
-    background-color: rgb(228, 228, 228);
-  }
-}
-
 .content {
   width: 100%;
   display: flex;
@@ -52,6 +40,7 @@
     a {
       color: black;
       text-decoration: none;
+      margin-left: .5rem;
     }
 
     &:hover {
@@ -80,15 +69,17 @@
   width: 7% !important;
   transition: all 0.3s ease-in-out;
 
+  .content-in-item {
+    display: none;
+  }
+
   .content {
     display: none;
   }
 
   .collapse-btn {
-    width: 6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    text-align: center;
   }
 }
 

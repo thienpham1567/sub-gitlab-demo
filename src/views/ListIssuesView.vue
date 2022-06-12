@@ -41,7 +41,7 @@
           </RouterLink>
         </div>
         <button class="btn issue-btn ">Edit issues</button>
-        <RouterLink :to="{ name: home }" class="issue-btn new-btn">New issus</RouterLink>
+        <RouterLink :to="{ name: home }" class="btn issue-btn new-btn">New issus</RouterLink>
       </div>
     </div>
     <div class="filtered-search-input-container">
@@ -143,12 +143,11 @@ const isAscOrder = ref(true);
 
   .top-area {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     border-top: 1px solid rgb(199, 199, 199);
     border-bottom: 1px solid rgb(199, 199, 199);
 
     .issuable-list-states {
+      width: 100%;
       display: flex;
 
       .item-state {
@@ -174,7 +173,10 @@ const isAscOrder = ref(true);
     }
 
     .nav-controls {
+      width: 100%;
       display: flex;
+      align-items: center;
+      justify-content: flex-end;
       gap: .5rem;
 
       a {
@@ -315,6 +317,33 @@ const isAscOrder = ref(true);
         text-decoration: underline;
         background-color: white;
       }
+    }
+  }
+
+}
+
+@media screen and (max-width:990px) {
+  .top-area {
+    flex-direction: column-reverse;
+
+    .nav-controls {
+      justify-content: flex-start !important;
+      margin-top: .5rem;
+    }
+  }
+}
+
+@media screen and (max-width:768px) {
+
+  .nav-controls {
+    flex-direction: column;
+    margin-top: .5rem;
+
+    .btn {
+      width: 100%;
+      display: block;
+      align-items: center;
+      justify-content: center;
     }
   }
 
