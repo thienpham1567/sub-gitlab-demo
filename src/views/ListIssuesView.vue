@@ -1,100 +1,98 @@
 <template>
-  <div class="Breadcrumbs-container">
-    <ul class="bread-crumb">
-      <li>Pham Ngoc Thien</li>
-      <li>thienpro</li>
-      <li>
-        <RouterLink :to="{ name: 'issues' }">
-          {{ route.name }}
-        </RouterLink>
-      </li>
-    </ul>
-    <div class="issuable-list-container">
-      <div class="top-area">
-        <ul class="issuable-list-states">
-          <li class="item-state">
-            <span>Open</span>
-            <span>5</span>
-          </li>
-          <li class="item-state">
-            <span>Closed</span>
-            <span>5</span>
-          </li>
-          <li class="item-state">
-            <span>All</span>
-            <span>5</span>
-          </li>
-        </ul>
-        <div class="nav-controls">
-          <RouterLink :to="{ name: 'home' }" class="btn">
-            <i class="fa-solid fa-wifi"></i>
-          </RouterLink>
-          <RouterLink :to="{ name: 'home' }" class="btn">
-            <i class="fa-solid fa-calendar-week"></i>
-          </RouterLink>
-          <div class="import-export">
-            <RouterLink :to="{ name: 'home' }" class="btn">
-              <i class="fa-solid fa-file-import"></i>
-            </RouterLink>
-            <RouterLink :to="{ name: 'home' }" class="btn-group export-btn">
-              <i class="fa-solid fa-file-export"></i>
-              <i class="fa-solid fa-chevron-down"></i>
-            </RouterLink>
-          </div>
-          <button class="btn issue-btn ">Edit issues</button>
-          <RouterLink :to="{ name: home }" class="issue-btn new-btn">New issus</RouterLink>
-        </div>
-      </div>
-      <div class="filtered-search-input-container">
-        <div class="issuable-search-container">
-          <div class="btn-group search-history">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="filtered-search-input">
-            <input type="text" name="" placeholder="Search or filter results">
-          </div>
-          <div class="btn btn-helper">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </div>
-        </div>
-        <div class="sort-dropdown-container">
-          <div class="btn-group">
-            <span>Title</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="btn btn-helper">
-            <i v-if="isAscOrder" class="fa-solid fa-arrow-up-short-wide"></i>
-            <i v-else class="fa-solid fa-arrow-down-wide-short"></i>
-          </div>
-        </div>
-      </div>
-      <ul class="issues-list">
-        <li v-for="(issue, index) in store.getters.issuesList" :key="index" class="issue">
-          <div class="issuable-main-info">
-            <div class="issue-title">
-              <RouterLink :to="{ name: 'home' }">{{ issue.title }}</RouterLink>
-            </div>
-            <div class="issuable-info">
-              <span>#{{ index + 1 }}</span>
-              <span>.</span>
-              <span>created 5 days ago by Thien Pham Ngoc</span>
-            </div>
-          </div>
-          <div class="issuable-meta">
-            <div class="comments">
-              <i class="fa-solid fa-comments"></i>
-              <span>0</span>
-            </div>
-            <div class="update-history">
-              <span>updated just now</span>
-            </div>
-          </div>
+  <ul class="bread-crumb">
+    <li>Pham Ngoc Thien</li>
+    <li>thienpro</li>
+    <li>
+      <RouterLink :to="{ name: 'issues' }">
+        {{ route.name }}
+      </RouterLink>
+    </li>
+  </ul>
+  <div class="issuable-list-container">
+    <div class="top-area">
+      <ul class="issuable-list-states">
+        <li class="item-state">
+          <span>Open</span>
+          <span>5</span>
+        </li>
+        <li class="item-state">
+          <span>Closed</span>
+          <span>5</span>
+        </li>
+        <li class="item-state">
+          <span>All</span>
+          <span>5</span>
         </li>
       </ul>
-      <div class="link">
-        <button class="btn btn-link">Email a new issue to this project</button>
+      <div class="nav-controls">
+        <RouterLink :to="{ name: 'home' }" class="btn">
+          <i class="fa-solid fa-wifi"></i>
+        </RouterLink>
+        <RouterLink :to="{ name: 'home' }" class="btn">
+          <i class="fa-solid fa-calendar-week"></i>
+        </RouterLink>
+        <div class="import-export">
+          <RouterLink :to="{ name: 'home' }" class="btn">
+            <i class="fa-solid fa-file-import"></i>
+          </RouterLink>
+          <RouterLink :to="{ name: 'home' }" class="btn-group export-btn">
+            <i class="fa-solid fa-file-export"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </RouterLink>
+        </div>
+        <button class="btn issue-btn ">Edit issues</button>
+        <RouterLink :to="{ name: home }" class="issue-btn new-btn">New issus</RouterLink>
       </div>
+    </div>
+    <div class="filtered-search-input-container">
+      <div class="issuable-search-container">
+        <div class="btn-group search-history">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filtered-search-input">
+          <input type="text" name="" placeholder="Search or filter results">
+        </div>
+        <div class="btn btn-helper">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </div>
+      <div class="sort-dropdown-container">
+        <div class="btn-group">
+          <span>Title</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="btn btn-helper">
+          <i v-if="isAscOrder" class="fa-solid fa-arrow-up-short-wide"></i>
+          <i v-else class="fa-solid fa-arrow-down-wide-short"></i>
+        </div>
+      </div>
+    </div>
+    <ul class="issues-list">
+      <li v-for="(issue, index) in store.getters.issuesList" :key="index" class="issue">
+        <div class="issuable-main-info">
+          <div class="issue-title">
+            <RouterLink :to="{ name: 'home' }">{{ issue.title }}</RouterLink>
+          </div>
+          <div class="issuable-info">
+            <span>#{{ index + 1 }}</span>
+            <span>.</span>
+            <span>created 5 days ago by Thien Pham Ngoc</span>
+          </div>
+        </div>
+        <div class="issuable-meta">
+          <div class="comments">
+            <i class="fa-solid fa-comments"></i>
+            <span>0</span>
+          </div>
+          <div class="update-history">
+            <span>updated just now</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="link">
+      <button class="btn btn-link">Email a new issue to this project</button>
     </div>
   </div>
 </template>

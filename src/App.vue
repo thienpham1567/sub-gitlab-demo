@@ -4,7 +4,7 @@
   </header>
   <main>
     <div class="main-container">
-      <aside :class="{ collapsed: isCollapsed }" class="sidebar">
+      <aside class="sidebar sidebar-mobile" :class="{ collapsed: isCollapsed }">
         <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" />
       </aside>
       <div class="view-pages">
@@ -23,7 +23,6 @@ import { ref } from 'vue';
 const isCollapsed = ref(false);
 
 const collapsed = () => {
-  console.log("App.vue");
   isCollapsed.value = !isCollapsed.value;
 }
 
@@ -38,19 +37,36 @@ const collapsed = () => {
   font-weight: normal;
 }
 
-header {}
-
 .main-container {
   display: flex;
   width: 100%;
 
   .sidebar {
-    width: 20%;
+    width: 18%;
     transition: all 0.3s ease-in-out;
   }
 
   .view-pages {
     width: 100%;
+  }
+}
+
+@media screen and (max-width:1200px) {
+  .sidebar-mobile {
+    background-color: aqua;
+    width: 7% !important;
+    transition: all 0.3s ease-in-out;
+
+    .content {
+      display: none;
+    }
+
+    .collapse-btn {
+      width: 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 </style>

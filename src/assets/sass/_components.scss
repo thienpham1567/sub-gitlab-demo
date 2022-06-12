@@ -1,44 +1,41 @@
 /*Components: anything reusable such as buttons, navbar, cards etc. */
-.icon-and-title {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  a {
-    text-decoration: none;
-    color: black;
-  }
-}
-
-.icon {
-  width: 2.5rem;
-}
-
-.item-sidebar {
+.collapse-btn {
+  width: 15.3rem;
   display: flex;
   align-items: center;
-  text-align: center;
-  font-size: 1rem;
-  padding: .5rem;
-  color: rgb(88, 88, 88);
-  cursor: pointer;
-  text-decoration: none;
-  margin-bottom: .1rem;
-  gap: .5rem;
-
-  .issues-counter {
-    background-color: rgb(172, 229, 255);
-    width: 1.1rem;
-    font-size: .8rem;
-    border-radius: 7px;
-    text-align: center;
-  }
+  gap: 1rem;
+  padding: .7rem 1rem;
 
   &:hover {
     background-color: rgb(228, 228, 228);
-    border-radius: 5px;
   }
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  margin-left: .5rem;
+  margin-right: 6rem;
+}
+
+.counter {
+  background-color: rgb(125, 229, 255);
+  padding: 0 .5rem;
+  border-radius: 10px;
+  font-size: .8rem;
+  text-align: center;
+}
+
+.wider {
+  height: 3.3rem;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .content-in-item {
@@ -80,19 +77,18 @@
 }
 
 .collapsed {
-  width: 6% !important;
-  transition: all 0.5s ease-in-out;
+  width: 7% !important;
+  transition: all 0.3s ease-in-out;
 
-  .content-in-item {
+  .content {
     display: none;
   }
 
-  .icon-and-title {
-    display: none;
-  }
-
-  .icon {
-    text-align: center;
+  .collapse-btn {
+    width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
