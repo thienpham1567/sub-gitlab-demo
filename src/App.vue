@@ -5,7 +5,7 @@
   <main>
     <div class="main-container">
       <aside class="sidebar sidebar-mobile" :class="{ collapsed: isCollapsed }">
-        <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" />
+        <Sidebar :isCollapsed="isCollapsed" :toggleSidebar="toggleSidebar" @collapsedSidebar="collapsed" />
       </aside>
       <div class="view-pages">
         <RouterView />
@@ -21,6 +21,7 @@ import { RouterView } from 'vue-router'
 import { ref } from 'vue';
 
 const isCollapsed = ref(false);
+const toggleSidebar = ref(false);
 
 const collapsed = () => {
   isCollapsed.value = !isCollapsed.value;
@@ -67,6 +68,12 @@ const collapsed = () => {
         display: none;
       }
     }
+  }
+}
+
+@media screen and (max-width:768px) {
+  .sidebar {
+    display: none;
   }
 }
 </style>

@@ -28,10 +28,14 @@
       </li>
     </ul>
     <div class="collapse-btn" @click="makeCollapsed">
-      <span v-if="isCollapsed"> <i class="fa-solid fa-angles-right"></i></span>
-      <span v-else> <i class="fa-solid fa-angles-left"></i></span>
+      <span v-if="toggleSidebar"><i class="fa-solid fa-xmark"></i></span>
+      <div v-else>
+        <span v-if="isCollapsed"> <i class="fa-solid fa-angles-right"></i></span>
+        <span v-else> <i class="fa-solid fa-angles-left"></i></span>
+      </div>
       <div class="content">
-        <span>Collapse sidebar</span>
+        <span v-if="!toggleSidebar">Collapse sidebar</span>
+        <span v-if="toggleSidebar">close sidebar</span>
       </div>
     </div>
   </div>
@@ -42,7 +46,8 @@ import { ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 
 const props = defineProps({
-  isCollapsed: Boolean
+  isCollapsed: Boolean,
+  toggleSidebar: Boolean
 });
 const store = useStore();
 const emit = defineEmits(['collapsedSidebar']);
@@ -62,10 +67,11 @@ const makeCollapsed = () => {
   background-color: rgb(245, 245, 245);
   height: 100vh;
   display: flex;
-  padding: 0 .5rem;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  padding: 0 .5rem;
+  z-index: 50;
 
   .list-sidebar {
     width: 100%;

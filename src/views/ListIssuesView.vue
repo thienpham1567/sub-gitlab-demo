@@ -1,5 +1,6 @@
 <template>
   <ul class="bread-crumb">
+    <button @click="toggleMenu" class="bars-menu"><i class="fa-solid fa-bars"></i></button>
     <li>Pham Ngoc Thien</li>
     <li>thienpro</li>
     <li>
@@ -35,7 +36,7 @@
           <RouterLink :to="{ name: 'home' }" class="btn">
             <i class="fa-solid fa-file-import"></i>
           </RouterLink>
-          <RouterLink :to="{ name: 'home' }" class="btn-group export-btn">
+          <RouterLink :to="{ name: 'home' }" class="btn-group">
             <i class="fa-solid fa-file-export"></i>
             <i class="fa-solid fa-chevron-down"></i>
           </RouterLink>
@@ -104,18 +105,35 @@ import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
 import { computed } from '@vue/reactivity';
 
+const emit = defineEmits(['toggleSidebar']);
 const store = useStore();
 const route = useRoute();
 const isAscOrder = ref(true);
+
+const toggleMenu = () => {
+  emit('toggleSidebar');
+}
 
 
 </script>
 
 <style lang="scss" scoped>
 .bread-crumb {
+  display: flex;
+  align-items: center;
   list-style: none;
   padding: .5rem 0 1rem 0;
   color: rgb(85, 85, 85);
+
+  .bars-menu {
+    display: none;
+    border: none;
+    background-color: white;
+    font-size: 1.6rem;
+    padding-right: 1.2rem;
+    border-right: 1px solid rgb(216, 216, 216);
+    cursor: pointer;
+  }
 
   li {
     display: inline;
@@ -131,6 +149,10 @@ const isAscOrder = ref(true);
     }
   }
 
+  :nth-child(2) {
+    padding-left: 1.2rem;
+  }
+
   li+li::before {
     padding: .5rem;
     content: "/\00a0";
@@ -143,8 +165,8 @@ const isAscOrder = ref(true);
 
   .top-area {
     display: flex;
-    border-top: 1px solid rgb(199, 199, 199);
-    border-bottom: 1px solid rgb(199, 199, 199);
+    border-top: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid rgb(216, 216, 216);
 
     .issuable-list-states {
       width: 100%;
@@ -193,7 +215,7 @@ const isAscOrder = ref(true);
 
         :nth-child(2) {
           border-radius: 0px 5px 5px 0px;
-          border: 1px solid rgb(199, 199, 199);
+          border: 1px solid rgb(216, 216, 216);
           border-left: none;
 
           i {
@@ -205,9 +227,10 @@ const isAscOrder = ref(true);
   }
 
   .filtered-search-input-container {
+    width: 100%;
     display: flex;
     background-color: rgb(240, 240, 240);
-    border-bottom: 1px solid rgb(199, 199, 199);
+    border-bottom: 1px solid rgb(216, 216, 216);
     gap: 1rem;
     padding: 1.1rem;
 
@@ -264,7 +287,7 @@ const isAscOrder = ref(true);
       align-items: center;
       justify-content: space-between;
       padding: .8rem 1rem;
-      border-bottom: 1px solid rgb(199, 199, 199);
+      border-bottom: 1px solid rgb(216, 216, 216);
 
 
       .issuable-main-info {
@@ -335,6 +358,12 @@ const isAscOrder = ref(true);
 
 @media screen and (max-width:768px) {
 
+  .bread-crumb {
+    .bars-menu {
+      display: inline-block;
+    }
+  }
+
   .nav-controls {
     flex-direction: column;
     margin-top: .5rem;
@@ -345,7 +374,33 @@ const isAscOrder = ref(true);
       align-items: center;
       justify-content: center;
     }
+
+    .import-export {
+      width: 100%;
+
+      .btn-group {
+        width: 100%;
+        height: 97%;
+      }
+    }
   }
+
+  .filtered-search-input-container {
+    flex-direction: column;
+
+    .sort-dropdown-container {
+      width: 100%;
+
+      .btn-group {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+    }
+
+  }
+
 
 }
 </style>
