@@ -27,14 +27,16 @@
         </ul>
       </li>
     </ul>
-    <div class="collapse-btn" @click="makeCollapsed">
-      <span v-if="toggleSidebar"><i class="fa-solid fa-xmark"></i></span>
-      <div v-else>
-        <span v-if="isCollapsed"> <i class="fa-solid fa-angles-right"></i></span>
-        <span v-else> <i class="fa-solid fa-angles-left"></i></span>
-      </div>
+    <div v-if="!toggleSidebar" class="collapse-btn" @click="makeCollapsed">
+      <span v-if="isCollapsed"> <i class="fa-solid fa-angles-right"></i></span>
+      <span v-else> <i class="fa-solid fa-angles-left"></i></span>
       <div class="content">
         <span v-if="!toggleSidebar">Collapse sidebar</span>
+      </div>
+    </div>
+    <div v-else class="collapse-btn" @click="closeMenu">
+      <span v-if="toggleSidebar"><i class="fa-solid fa-xmark"></i></span>
+      <div class="content">
         <span v-if="toggleSidebar">close sidebar</span>
       </div>
     </div>
@@ -55,8 +57,10 @@ const isClickedItem = ref(false);
 
 const makeClickItem = () => isClickedItem.value = true;
 const makeCollapsed = () => {
-  console.log(innerWidth);
   emit('collapsedSidebar');
+}
+const closeMenu = () => {
+
 }
 
 </script>
