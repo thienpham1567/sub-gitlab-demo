@@ -1,11 +1,12 @@
 <template>
-  <header>
+  <header class="nav-header">
     <Navigation />
   </header>
   <main>
     <div class="main-container">
-      <aside class="sidebar sidebar-mobile" :class="{ collapsed: isCollapsed }">
-        <Sidebar :isCollapsed="isCollapsed" :toggleSidebar="toggleSidebar" @collapsedSidebar="collapsed" />
+      <aside class="sidebar sidebar-mobile"
+        :class="{ collapsed: isCollapsed, 'toggle-sidebar-mobile': store.getters.toggleSidebar }">
+        <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" />
       </aside>
       <div class="view-pages">
         <RouterView />
@@ -19,9 +20,10 @@ import Navigation from './components/Navigation.vue';
 import Sidebar from './components/Sidebar.vue';
 import { RouterView } from 'vue-router'
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const isCollapsed = ref(false);
-const toggleSidebar = ref(false);
 
 const collapsed = () => {
   isCollapsed.value = !isCollapsed.value;
@@ -36,6 +38,11 @@ const collapsed = () => {
   margin: 0;
   padding: 0;
   font-weight: normal;
+}
+
+.header-nav {
+  position: fixed;
+  z-index: 99;
 }
 
 .main-container {
@@ -54,26 +61,66 @@ const collapsed = () => {
 }
 
 @media screen and (max-width:1200px) {
-  .sidebar-mobile {
-    width: 7% !important;
-    transition: all 0.3s ease-in-out;
+  .main-container {
+    .sidebar {
+      width: 7%;
+      transition: all 0.2s ease-in-out;
 
-    .sidebar-container {
+      .sidebar-container {
+        .list-sidebar {
+          .content-in-item {
+            visibility: hidden;
+          }
 
-      .content-in-item {
-        display: none;
-      }
+          .content {
+            display: none;
+          }
+        }
 
-      .content {
-        display: none;
+        .collapse-btn {
+          .content {
+            display: none;
+          }
+        }
       }
     }
   }
 }
 
-@media screen and (max-width:768px) {
-  .sidebar {
-    display: none;
+@media screen and (max-width:767px) {
+  .main-container {
+    .sidebar {
+      background-color: rgba(0, 0, 0, 0.2);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      left: -100%;
+
+      .sidebar-container {
+        width: 55%;
+
+        .list-sidebar {
+          li {
+            width: 100%;
+          }
+
+          .content-in-item {
+            visibility: visible;
+          }
+
+          .content {
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+}
+
+.main-container {
+  .toggle-sidebar-mobile {
+    left: 0;
   }
 }
 </style>

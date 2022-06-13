@@ -1,6 +1,6 @@
 <template>
   <ul class="bread-crumb">
-    <button @click="toggleMenu" class="bars-menu"><i class="fa-solid fa-bars"></i></button>
+    <button @click.prevent="toggleMenu" class="bars-menu"><i class="fa-solid fa-bars"></i></button>
     <li>Pham Ngoc Thien</li>
     <li>thienpro</li>
     <li>
@@ -42,7 +42,7 @@
           </RouterLink>
         </div>
         <button class="btn issue-btn ">Edit issues</button>
-        <RouterLink :to="{ name: home }" class="btn issue-btn new-btn">New issus</RouterLink>
+        <RouterLink :to="{ name: 'home' }" class="btn issue-btn new-btn">New issus</RouterLink>
       </div>
     </div>
     <div class="filtered-search-input-container">
@@ -111,7 +111,7 @@ const route = useRoute();
 const isAscOrder = ref(true);
 
 const toggleMenu = () => {
-  emit('toggleSidebar');
+  store.dispatch('toggle_menu');
 }
 
 
@@ -356,7 +356,7 @@ const toggleMenu = () => {
   }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:767px) {
 
   .bread-crumb {
     .bars-menu {

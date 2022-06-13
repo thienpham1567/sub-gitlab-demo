@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar-container">
-    <ul class=" list-sidebar">
+    <ul class="list-sidebar">
       <li>
         <RouterLink :to="{ name: 'home' }" class="item-sidebar wider">
           <span class="icon shortcut">T</span>
@@ -9,7 +9,7 @@
           </div>
         </RouterLink>
       </li>
-      <li @click="makeClickItem">
+      <li @click="makeClickItem" class="tooltip-issues">
         <RouterLink :to="{ name: 'issues' }" class="item-sidebar">
           <span class="icon"><i class="fa-solid fa-folder-open"></i></span>
           <div class="content">
@@ -25,31 +25,42 @@
             <RouterLink :to="{ name: 'home' }">Broad</RouterLink>
           </li>
         </ul>
+        <div class="content-tooltip">
+          <div class="content-title">
+            <span class="title">Issues</span>
+            <span class="counter">{{ store.getters.lengthIssuesList }}</span>
+          </div>
+          <ul class="content-in-item">
+            <li>
+              <RouterLink :to="{ name: 'issues' }">List</RouterLink>
+            </li>
+            <li>
+              <RouterLink :to="{ name: 'home' }">Broad</RouterLink>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
-    <div v-if="!toggleSidebar" class="collapse-btn" @click="makeCollapsed">
+    <div v-if="!store.getters.toggleSidebar" class="collapse-btn" @click.prevent="makeCollapsed">
       <span v-if="isCollapsed"> <i class="fa-solid fa-angles-right"></i></span>
       <span v-else> <i class="fa-solid fa-angles-left"></i></span>
       <div class="content">
-        <span v-if="!toggleSidebar">Collapse sidebar</span>
+        <span>Collapse sidebar</span>
       </div>
     </div>
-    <div v-else class="collapse-btn" @click="closeMenu">
-      <span v-if="toggleSidebar"><i class="fa-solid fa-xmark"></i></span>
-      <div class="content">
-        <span v-if="toggleSidebar">close sidebar</span>
-      </div>
+    <div v-else class="collapse-btn" @click.prevent="closeMenu">
+      <span><i class="fa-solid fa-xmark"></i></span>
+      <span>close sidebar</span>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
 
 const props = defineProps({
   isCollapsed: Boolean,
-  toggleSidebar: Boolean
 });
 const store = useStore();
 const emit = defineEmits(['collapsedSidebar']);
@@ -60,7 +71,7 @@ const makeCollapsed = () => {
   emit('collapsedSidebar');
 }
 const closeMenu = () => {
-
+  store.dispatch('toggle_menu');
 }
 
 </script>
@@ -87,13 +98,16 @@ const closeMenu = () => {
     list-style: none;
     padding-top: .5rem;
 
+    .content-tooltip {
+      display: none;
+    }
+
     a {
       color: rgb(85, 85, 85);
       text-decoration: none;
     }
 
     .item-sidebar {
-      width: 100%;
       display: flex;
       align-items: center;
       padding: 0 .2rem;
@@ -107,6 +121,8 @@ const closeMenu = () => {
       }
 
       .shortcut {
+        width: 2.7rem;
+        height: 2.7rem;
         background-color: rgb(255, 223, 229);
         border-radius: 5px;
         border: 1px solid rgb(218, 218, 218);
@@ -128,6 +144,7 @@ const closeMenu = () => {
     align-items: center;
     gap: 1rem;
     padding: .7rem 1rem;
+    cursor: pointer;
 
     &:hover {
       background-color: rgb(228, 228, 228);
@@ -135,6 +152,64 @@ const closeMenu = () => {
   }
 }
 
+@media screen and (max-width:1200px) {
+  .sidebar-container {
+    .list-sidebar {
+      .tooltip-issues {
+        position: relative;
 
-@media only screen and (max-width:768px) {}
+        .content-tooltip {
+
+          .content-title {
+            position: absolute;
+            background-color: rgb(202, 202, 202);
+            border-radius: 5px 5px 0px 0px;
+            left: 0;
+            top: 0;
+            width: 12rem;
+            height: 2rem;
+            text-align: center;
+            padding-top: .2rem;
+          }
+
+          position: absolute;
+          visibility: hidden;
+          display: block;
+          align-items: center;
+          justify-content: center;
+          top: -.4rem;
+          left: 105%;
+          width: 12rem;
+          background-color: white;
+          border-radius: 5px;
+          padding: 2.5rem .5rem .5rem .5rem;
+          margin-top: .11rem;
+          box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        &:hover {
+          .content-tooltip {
+            visibility: visible;
+
+            .content-in-item {
+              visibility: visible;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width:767px) {
+  .sidebar-container {
+    .list-sidebar {
+      .tooltip-issues {
+        .content-tooltip {
+          display: none;
+        }
+      }
+    }
+  }
+}
 </style>
