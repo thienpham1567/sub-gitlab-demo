@@ -11,7 +11,7 @@
       </li>
       <li @click="makeClickItem" class="tooltip-issues">
         <RouterLink :to="{ name: 'issues' }" class="item-sidebar">
-          <span class="icon"><i class="fa-solid fa-folder-open"></i></span>
+          <span class="icon"><i class="fa-solid fa-folder"></i></span>
           <div class="content">
             <span class="title">Issues</span>
             <span class="counter">{{ store.getters.lengthIssuesList }}</span>

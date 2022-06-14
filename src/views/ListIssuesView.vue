@@ -192,7 +192,7 @@ const toggleMenu = () => {
   .filtered-search-input-container {
     width: 100%;
     display: flex;
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(245, 245, 245);
     border-bottom: 1px solid rgb(216, 216, 216);
     gap: 1rem;
     padding: 1.1rem;

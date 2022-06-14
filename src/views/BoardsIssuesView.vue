@@ -37,6 +37,37 @@
       </div>
     </div>
   </div>
+  <div class="board-list">
+    <div class="board">
+      <div class="inner-board">
+        <div class="top-area-board">
+          <div class="state">
+            <i class="fa-solid fa-chevron-down"></i>
+            <span>Open</span>
+          </div>
+          <div class="new-issue-board">
+            <i class="fa-solid fa-folder"></i>
+            <span>3</span>
+            <button class="btn border-light-grey"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="board closed">
+      <div class="inner-board">
+        <div class="top-area-board">
+          <div class="state">
+            <i class="fa-solid fa-chevron-down"></i>
+            <span>Closed</span>
+          </div>
+          <div class="new-issue-board">
+            <i class="fa-solid fa-folder"></i>
+            <span>3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -53,7 +84,7 @@ const toggleMenu = () => {
 
 <style lang="scss" scoped>
 .issues-filters {
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(245, 245, 245);
   width: 100%;
   border-top: 1px solid rgb(216, 216, 216);
   border-bottom: 1px solid rgb(216, 216, 216);
@@ -99,6 +130,65 @@ const toggleMenu = () => {
   }
 }
 
+.board-list {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  gap: 1rem;
+
+  .board {
+    width: 35%;
+    background-color: rgb(237, 237, 237);
+    padding: 0 .5rem;
+    border-radius: 5px;
+
+    .inner-board {
+      .top-area-board {
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .5rem 0;
+
+        .state {
+          text-align: center;
+
+          span {
+            font-weight: 500;
+          }
+
+          i {
+            padding: .5rem;
+            font-size: .7rem;
+            border-radius: 5px;
+            margin-right: .4rem;
+
+            &:hover {
+              background-color: rgb(199, 199, 199);
+            }
+          }
+        }
+
+        .new-issue-board {
+          display: flex;
+          align-items: center;
+          font-size: 1rem;
+          gap: .5rem;
+          color: rgb(109, 109, 109);
+
+          .btn {
+            i {
+              color: rgb(109, 109, 109);
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width:992px) {
   .issues-filters {
     .issues-details-filters {
@@ -116,5 +206,59 @@ const toggleMenu = () => {
   }
 }
 
-@media screen and (max-width:767px) {}
+@media screen and (max-width:767px) {
+  .bread-crumb {
+    .bars-menu {
+      display: inline-block;
+    }
+  }
+
+  .issues-filters {
+    background-color: white;
+
+    .issues-details-filters {
+      flex-direction: column;
+
+      .half-left-content {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+
+        .development-btn {
+          justify-content: space-between;
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        .new-board-btn {
+          width: 18%;
+        }
+
+        .search {
+          display: flex;
+          width: 100%;
+
+          .filtered-search-input {
+            border-left: 1px solid grey;
+          }
+        }
+      }
+
+      .half-right-content {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
+        button {
+          display: block;
+          width: 100%;
+        }
+
+      }
+
+    }
+  }
+
+}
 </style>

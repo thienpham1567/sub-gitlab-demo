@@ -5,15 +5,15 @@ const state = {
   issuesList: [
     {
       title: 'test',
-      date: new Date(2022, 6, 10, 16, 20, 0),
+      state: true,
     },
     {
       title: 'test1',
-      date: new Date(2022, 6, 10, 16, 20, 0),
+      state: true,
     },
     {
       title: 'test2',
-      date: new Date(2022, 6, 10, 16, 20, 0),
+      state: true,
     },
   ],
 };
