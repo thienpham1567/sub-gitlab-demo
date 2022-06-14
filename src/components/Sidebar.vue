@@ -110,7 +110,7 @@ const closeMenu = () => {
     .item-sidebar {
       display: flex;
       align-items: center;
-      padding: 0 .2rem;
+      padding: 0 .5rem;
 
       .icon {
         display: flex;
