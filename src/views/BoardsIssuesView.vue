@@ -47,10 +47,16 @@
           </div>
           <div class="new-issue-board">
             <i class="fa-solid fa-folder"></i>
-            <span>3</span>
+            <span>{{ openIssues.length }}</span>
             <button class="btn border-light-grey"><i class="fa-solid fa-plus"></i></button>
           </div>
         </div>
+        <ul class="issues-container">
+          <li v-for="(issue, index) in store.getters.openIssues" :key="index">
+            <span>{{ issue.title }}</span>
+            <span>#{{ index }}</span>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="board closed">
@@ -62,9 +68,15 @@
           </div>
           <div class="new-issue-board">
             <i class="fa-solid fa-folder"></i>
-            <span>3</span>
+            <span>{{ closedIssues.length }}</span>
           </div>
         </div>
+        <ul class="issues-container">
+          <li v-for="(issue, index) in store.getters.closedIssues" :key="index">
+            <span>{{ issue.title }}</span>
+            <span>#{{ index }}</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -76,18 +88,23 @@ import { useStore } from 'vuex';
 const route = useRoute();
 const store = useStore();
 
+const openIssues = store.getters.openIssues;
+const closedIssues = store.getters.closedIssues;
+
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
 }
+
+
 
 </script>
 
 <style lang="scss" scoped>
 .issues-filters {
-  background-color: rgb(245, 245, 245);
   width: 100%;
-  border-top: 1px solid rgb(216, 216, 216);
-  border-bottom: 1px solid rgb(216, 216, 216);
+  background-color: rgb(247, 247, 247);
+  border-top: 1px solid rgb(225, 225, 225);
+  border-bottom: 1px solid rgb(225, 225, 225);
   padding: 1rem;
 
   .issues-details-filters {
@@ -103,16 +120,16 @@ const toggleMenu = () => {
 
       .development-btn {
         justify-content: space-between;
-        width: 24%;
+        width: 23%;
       }
 
       .new-board-btn {
-        width: 18%;
+        width: 16%;
       }
 
       .search {
         display: flex;
-        width: 58%;
+        width: 61%;
 
         .filtered-search-input {
           border-left: 1px solid grey;
@@ -181,6 +198,7 @@ const toggleMenu = () => {
             i {
               color: rgb(109, 109, 109);
               font-size: 1rem;
+              text-align: center;
             }
           }
         }

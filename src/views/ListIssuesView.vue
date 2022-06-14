@@ -128,8 +128,8 @@ const toggleMenu = () => {
 
   .top-area {
     display: flex;
-    border-top: 1px solid rgb(216, 216, 216);
-    border-bottom: 1px solid rgb(216, 216, 216);
+    border-top: 1px solid rgb(225, 225, 225);
+    border-bottom: 1px solid rgb(225, 225, 225);
 
     .issuable-list-states {
       width: 100%;
@@ -192,8 +192,8 @@ const toggleMenu = () => {
   .filtered-search-input-container {
     width: 100%;
     display: flex;
-    background-color: rgb(245, 245, 245);
-    border-bottom: 1px solid rgb(216, 216, 216);
+    background-color: rgb(247, 247, 247);
+    border-bottom: 1px solid rgb(225, 225, 225);
     gap: 1rem;
     padding: 1.1rem;
 

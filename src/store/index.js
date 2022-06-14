@@ -34,6 +34,10 @@ const getters = {
   issuesList: (state) => state.issuesList,
   lengthIssuesList: (state) => state.issuesList.length,
   toggleSidebar: (state) => state.toggleSidebar,
+  openIssues: (state) =>
+    state.issuesList.filter((issue) => issue.state === true),
+  closedIssues: (state) =>
+    state.issuesList.filter((issue) => issue.state !== true),
 };
 
 const store = createStore({
