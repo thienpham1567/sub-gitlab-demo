@@ -29,7 +29,11 @@
         </div>
       </div>
       <div class="half-right-content">
-
+        <div class="board-labels">
+          <span>Show labels</span>
+        </div>
+        <button class="btn issue-btn border-light-grey">Edit board</button>
+        <button class="issue-btn new-btn border-light-grey">Create list</button>
       </div>
     </div>
   </div>
@@ -94,4 +98,23 @@ const toggleMenu = () => {
 
   }
 }
+
+@media screen and (max-width:992px) {
+  .issues-filters {
+    .issues-details-filters {
+      flex-direction: column;
+
+      .half-left-content {
+        width: 100%;
+      }
+
+      .half-right-content {
+        width: 100%;
+      }
+
+    }
+  }
+}
+
+@media screen and (max-width:767px) {}
 </style>
