@@ -1,4 +1,46 @@
 /*Components: anything reusable such as buttons, navbar, cards etc. */
+.bread-crumb {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: .5rem 0 1rem 0;
+  color: rgb(85, 85, 85);
+
+  .bars-menu {
+    display: none;
+    border: none;
+    background-color: white;
+    font-size: 1.6rem;
+    padding-right: 1.2rem;
+    border-right: 1px solid rgb(216, 216, 216);
+    cursor: pointer;
+  }
+
+  li {
+    display: inline;
+
+    a {
+      text-decoration: none;
+      color: rgb(85, 85, 85);
+      font-weight: 500;
+
+      &:hover {
+        color: black;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  :nth-child(2) {
+    padding-left: 1.2rem;
+  }
+
+  li+li::before {
+    padding: .5rem;
+    content: "/\00a0";
+  }
+}
+
 .content {
   width: 100%;
   display: flex;
@@ -87,7 +129,6 @@
   text-align: center;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid rgb(199, 199, 199);
   background-color: white;
   padding: .5rem;
   border-radius: 5px;
@@ -103,14 +144,29 @@
   justify-content: center;
   background-color: white;
   gap: .6rem;
-  border: 1px solid grey;
   padding: .5rem;
-  border-radius: 5px 0px 0px 5px;
+  border-radius: 5px;
   cursor: pointer;
 
   &:hover {
     background-color: rgb(199, 199, 199);
   }
+}
+
+.border-grey {
+  border: 1px solid grey;
+}
+
+.border-light-grey {
+  border: 1px solid rgb(199, 199, 199);
+}
+
+.square-right {
+  border-radius: 5px 0px 0px 5px;
+}
+
+.square-left {
+  border-radius: 0px 5px 5px 0px;
 }
 
 .btn-helper {
@@ -124,7 +180,6 @@
   height: 2.5rem;
   padding: .5rem;
   border-radius: 5px;
-  border: 1px solid rgb(199, 199, 199);
   text-align: center;
   background-color: white;
 }
@@ -135,5 +190,19 @@
 
   &:hover {
     background-color: rgb(0, 115, 209);
+  }
+}
+
+.filtered-search-input {
+  background-color: white;
+  width: 100%;
+  border: 1px solid grey;
+  padding: .5rem;
+  border-left: none;
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
   }
 }

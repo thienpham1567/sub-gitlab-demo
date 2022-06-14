@@ -22,7 +22,7 @@
             <RouterLink :to="{ name: 'issues' }">List</RouterLink>
           </li>
           <li>
-            <RouterLink :to="{ name: 'home' }">Broad</RouterLink>
+            <RouterLink :to="{ name: 'issue-boards' }">Broad</RouterLink>
           </li>
         </ul>
         <div class="content-tooltip">
@@ -35,7 +35,7 @@
               <RouterLink :to="{ name: 'issues' }">List</RouterLink>
             </li>
             <li>
-              <RouterLink :to="{ name: 'home' }">Broad</RouterLink>
+              <RouterLink :to="{ name: 'issue-boards' }">Broad</RouterLink>
             </li>
           </ul>
         </div>
@@ -157,6 +157,7 @@ const closeMenu = () => {
     .list-sidebar {
       .tooltip-issues {
         position: relative;
+        width: 100%;
 
         .content-tooltip {
 

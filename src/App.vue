@@ -95,6 +95,7 @@ const collapsed = () => {
       top: 0;
       width: 100%;
       left: -100%;
+      z-index: 2;
 
       .sidebar-container {
         width: 55%;

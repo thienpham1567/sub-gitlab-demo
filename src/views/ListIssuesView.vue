@@ -26,28 +26,28 @@
         </li>
       </ul>
       <div class="nav-controls">
-        <RouterLink :to="{ name: 'home' }" class="btn">
+        <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
           <i class="fa-solid fa-wifi"></i>
         </RouterLink>
-        <RouterLink :to="{ name: 'home' }" class="btn">
+        <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
           <i class="fa-solid fa-calendar-week"></i>
         </RouterLink>
         <div class="import-export">
-          <RouterLink :to="{ name: 'home' }" class="btn">
+          <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
             <i class="fa-solid fa-file-import"></i>
           </RouterLink>
-          <RouterLink :to="{ name: 'home' }" class="btn-group">
+          <RouterLink :to="{ name: 'home' }" class="btn-group border-light-grey square-right">
             <i class="fa-solid fa-file-export"></i>
             <i class="fa-solid fa-chevron-down"></i>
           </RouterLink>
         </div>
-        <button class="btn issue-btn ">Edit issues</button>
-        <RouterLink :to="{ name: 'home' }" class="btn issue-btn new-btn">New issus</RouterLink>
+        <button class="btn issue-btn border-light-grey">Edit issues</button>
+        <RouterLink :to="{ name: 'create-issues' }" class="btn issue-btn new-btn">New issus</RouterLink>
       </div>
     </div>
     <div class="filtered-search-input-container">
       <div class="issuable-search-container">
-        <div class="btn-group search-history">
+        <div class="btn-group square-right border-grey search-history">
           <i class="fa-solid fa-clock-rotate-left"></i>
           <i class="fa-solid fa-chevron-down"></i>
         </div>
@@ -59,9 +59,15 @@
         </div>
       </div>
       <div class="sort-dropdown-container">
-        <div class="btn-group">
+        <div class="btn-group square-right border-grey">
           <span>Title</span>
           <i class="fa-solid fa-chevron-down"></i>
+          <div class="dropdown-content">
+            <span>Priority</span>
+            <span>Created date</span>
+            <span>Updated date</span>
+            <span>Title</span>
+          </div>
         </div>
         <div class="btn btn-helper">
           <i v-if="isAscOrder" class="fa-solid fa-arrow-up-short-wide"></i>
@@ -105,60 +111,17 @@ import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
 import { computed } from '@vue/reactivity';
 
-const emit = defineEmits(['toggleSidebar']);
 const store = useStore();
 const route = useRoute();
 const isAscOrder = ref(true);
+const filterOrder = ['Priority', 'Created date', 'Updated date', 'Title'];
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
 }
-
-
 </script>
 
-<style lang="scss" scoped>
-.bread-crumb {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  padding: .5rem 0 1rem 0;
-  color: rgb(85, 85, 85);
-
-  .bars-menu {
-    display: none;
-    border: none;
-    background-color: white;
-    font-size: 1.6rem;
-    padding-right: 1.2rem;
-    border-right: 1px solid rgb(216, 216, 216);
-    cursor: pointer;
-  }
-
-  li {
-    display: inline;
-
-    a {
-      text-decoration: none;
-      color: rgb(85, 85, 85);
-
-      &:hover {
-        color: black;
-        text-decoration: underline;
-      }
-    }
-  }
-
-  :nth-child(2) {
-    padding-left: 1.2rem;
-  }
-
-  li+li::before {
-    padding: .5rem;
-    content: "/\00a0";
-  }
-}
-
+<style lang="scss">
 .issuable-list-container {
   display: block;
   color: rgb(85, 85, 85);
@@ -254,26 +217,45 @@ const toggleMenu = () => {
           font-size: .7rem;
         }
       }
-
-      .filtered-search-input {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 95%;
-        border: 1px solid grey;
-        padding: .5rem;
-        border-left: none;
-
-        input {
-          width: 100%;
-          border: none;
-          outline: none;
-        }
-      }
     }
 
     .sort-dropdown-container {
       display: flex;
+      position: relative;
+      z-index: 1;
+
+      .btn-group {
+        &:hover {
+          .dropdown-content {
+            display: flex;
+          }
+        }
+      }
+
+      .dropdown-content {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        background-color: white;
+        padding: 1rem;
+        border: 1px solid rgb(177, 177, 177);
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+        top: 2.6rem;
+        left: -5.3rem;
+
+        span {
+          display: block;
+          width: 7.5rem;
+          margin-bottom: .5rem;
+          padding: .3rem .2rem;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: rgb(214, 214, 214);
+          }
+        }
+      }
     }
   }
 
