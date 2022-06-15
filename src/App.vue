@@ -56,7 +56,17 @@ const collapsed = () => {
   }
 
   .view-pages {
-    width: 100%;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    padding: .5rem 1rem;
+    font-size: .8rem;
+  }
+}
+
+@media screen and (max-width:1632px) {
+  .view-pages {
+    padding: .5rem 7rem;
   }
 }
 
@@ -83,6 +93,10 @@ const collapsed = () => {
           }
         }
       }
+    }
+
+    .view-pages {
+      width: 100%;
     }
   }
 }

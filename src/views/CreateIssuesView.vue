@@ -13,23 +13,35 @@
     <h1>New Issue</h1>
     <div class="issue-input">
       <label for="">Title (required)</label>
-      <input type="text" name="title">
+      <input type="text" name="title" v-model="issue.title">
     </div>
     <div class="btns">
-      <button class="issue-btn new-btn">Create issue</button>
-      <button class="btn issue-btn">Cancel</button>
+      <button @click="" class="issue-btn new-btn border-light-grey">Create issue</button>
+      <button @click="backIntoIssues" class="btn issue-btn border-light-grey">Cancel</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
+import { reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
+
+
+const issue = reactive({
+  title: "",
+  state: true
+});
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
+}
+
+const backIntoIssues = () => {
+  router.push({ name: "issues" });
 }
 
 </script>
@@ -73,6 +85,8 @@ const toggleMenu = () => {
   }
 
   .btns {
+    display: flex;
+
     .new-btn {
       width: 8rem;
       margin-right: .5rem;

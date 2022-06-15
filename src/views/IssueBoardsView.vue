@@ -157,7 +157,7 @@ const toggleMenu = () => {
   .board {
     overflow-y: scroll;
     display: block;
-    width: 35%;
+    width: 30%;
     background-color: rgb(237, 237, 237);
     padding: 0 .5rem;
     border-radius: 5px;
