@@ -115,7 +115,7 @@ const toggleMenu = () => {
     .half-left-content {
       display: flex;
       align-items: center;
-      width: 70%;
+      width: 68%;
       gap: .5rem;
 
       .development-btn {
@@ -124,12 +124,12 @@ const toggleMenu = () => {
       }
 
       .new-board-btn {
-        width: 16%;
+        width: 17%;
       }
 
       .search {
         display: flex;
-        width: 61%;
+        width: 60%;
 
         .filtered-search-input {
           border-left: 1px solid grey;
@@ -140,7 +140,7 @@ const toggleMenu = () => {
     .half-right-content {
       display: flex;
       align-items: center;
-      width: 30%;
+      width: 32%;
       gap: .5rem;
     }
 
@@ -148,21 +148,25 @@ const toggleMenu = () => {
 }
 
 .board-list {
+  overflow-x: hidden;
   display: flex;
-  align-items: center;
-  width: 100%;
+  height: 31rem;
   padding: 1rem;
   gap: 1rem;
 
   .board {
+    overflow-y: scroll;
+    display: block;
     width: 35%;
     background-color: rgb(237, 237, 237);
     padding: 0 .5rem;
     border-radius: 5px;
 
     .inner-board {
+      width: 100%;
+
       .top-area-board {
-        height: 3.5rem;
+        height: 4rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -203,9 +207,29 @@ const toggleMenu = () => {
           }
         }
       }
+
+      .issues-container {
+        list-style: none;
+
+        li {
+          display: flex;
+          flex-direction: column;
+          padding: .8rem .5rem;
+          background-color: white;
+          margin-bottom: .5rem;
+          border-radius: 5px;
+          gap: .2rem;
+          cursor: grab;
+
+          :first-child {
+            font-weight: 500;
+          }
+        }
+      }
     }
   }
 }
+
 
 @media screen and (max-width:992px) {
   .issues-filters {
@@ -222,6 +246,11 @@ const toggleMenu = () => {
 
     }
   }
+
+  .board-list {
+    height: 28rem;
+  }
+
 }
 
 @media screen and (max-width:767px) {
@@ -250,7 +279,7 @@ const toggleMenu = () => {
         }
 
         .new-board-btn {
-          width: 18%;
+          width: 22%;
         }
 
         .search {
@@ -277,6 +306,5 @@ const toggleMenu = () => {
 
     }
   }
-
 }
 </style>

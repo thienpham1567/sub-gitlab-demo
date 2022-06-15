@@ -15,7 +15,7 @@ import { RouterView } from 'vue-router';
   display: block;
   margin: 0 auto;
   padding: .5rem 7rem;
-  font-size: .9rem;
+  font-size: .8rem;
 }
 
 @media screen and (max-width:1632px) {

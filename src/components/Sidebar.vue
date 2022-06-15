@@ -14,7 +14,7 @@
           <span class="icon"><i class="fa-solid fa-folder"></i></span>
           <div class="content">
             <span class="title">Issues</span>
-            <span class="counter">{{ store.getters.lengthIssuesList }}</span>
+            <span class="counter">{{ lengthIssuesList }}</span>
           </div>
         </RouterLink>
         <ul v-if="isClickedItem" class="content-in-item">
@@ -58,18 +58,20 @@
 <script setup>
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import { computed } from '@vue/reactivity';
 
+const emit = defineEmits(['collapsedSidebar']);
 const props = defineProps({
   isCollapsed: Boolean,
 });
 const store = useStore();
-const emit = defineEmits(['collapsedSidebar']);
 const isClickedItem = ref(false);
 
 const makeClickItem = () => isClickedItem.value = true;
 const makeCollapsed = () => {
   emit('collapsedSidebar');
 }
+const lengthIssuesList = computed(() => store.getters.lengthIssuesList);
 const closeMenu = () => {
   store.dispatch('toggle_menu');
 }
@@ -154,6 +156,7 @@ const closeMenu = () => {
 
 @media screen and (max-width:1200px) {
   .sidebar-container {
+
     .list-sidebar {
       .tooltip-issues {
         position: relative;

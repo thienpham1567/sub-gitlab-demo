@@ -13,7 +13,11 @@ const state = {
     },
     {
       title: 'test2',
-      state: false,
+      state: true,
+    },
+    {
+      title: 'tes3',
+      state: true,
     },
   ],
 };

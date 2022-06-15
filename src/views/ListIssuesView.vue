@@ -42,7 +42,7 @@
           </RouterLink>
         </div>
         <button class="btn issue-btn border-light-grey">Edit issues</button>
-        <RouterLink :to="{ name: 'create-issues' }" class="btn issue-btn new-btn">New issus</RouterLink>
+        <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
       </div>
     </div>
     <div class="filtered-search-input-container">
@@ -114,7 +114,6 @@ import { computed } from '@vue/reactivity';
 const store = useStore();
 const route = useRoute();
 const isAscOrder = ref(true);
-const filterOrder = ['Priority', 'Created date', 'Updated date', 'Title'];
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
