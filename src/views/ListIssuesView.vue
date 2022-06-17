@@ -43,7 +43,8 @@
                 <i class="fa-solid fa-chevron-down"></i>
               </RouterLink>
             </div>
-            <button :disabled="issuesStatePresent.issues.length === 0" class="btn issue-btn border-light-grey">Edit
+            <button @click="editIssues" :disabled="issuesStatePresent.issues.length === 0"
+              class="btn issue-btn border-light-grey">Edit
               issues</button>
             <RouterLink :to="{ name: 'create-issues' }" class="btn issue-btn new-btn">New issus</RouterLink>
           </div>
@@ -81,6 +82,7 @@
         <ul v-if="issuesStatePresent.issues.length > 0" class="issues-list">
           <li v-for="(issue, index) in issuesStatePresent.issues" :key="index" class="issue">
             <div class="issuable-main-info">
+              <input v-show="isClickedEditIssues" type="checkbox" :value="index" v-model="checkedItems">
               <div class="issue-title">
                 <RouterLink :to="{ name: 'home' }">{{ issue.title }}</RouterLink>
               </div>
@@ -121,10 +123,10 @@
         </div>
       </div>
     </div>
-    <div class="issuable-update-sidebar">
+    <div class="issuable-update-sidebar" :class="{ edit: isClickedEditIssues }">
       <div class="btns">
         <button class="btn issue-btn border-light-grey">Update all</button>
-        <button class="btn issue-btn border-light-grey">Cancel</button>
+        <button @click="editIssues" class="btn issue-btn border-light-grey">Cancel</button>
       </div>
       <div class="status">
         <label for="">Status</label>
@@ -132,10 +134,10 @@
           <span>Select status</span>
           <i class="fa-solid fa-chevron-down"></i>
         </button>
-        <ul class="dropdown-content list-status">
-          <li>Open</li>
-          <li>Closed</li>
-        </ul>
+        <div class="dropdown-content list-status">
+          <li @click="updateOpenStatus">Open</li>
+          <li @click="updateClosedStatus">Closed</li>
+        </div>
       </div>
     </div>
   </div>
@@ -147,7 +149,6 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
-import { computed } from '@vue/reactivity';
 
 const store = useStore();
 const route = useRoute();
@@ -160,6 +161,8 @@ let issuesStatePresent = ref({
   presentState: "open",
   issues: openIssues
 });
+const isClickedEditIssues = ref(false);
+const checkedItems = ref([]);
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
@@ -170,7 +173,6 @@ const toggleIssueStateOpen = () => {
     presentState: "open",
     issues: openIssues
   };
-
 }
 const toggleIssueStateClosed = () => {
   issuesStatePresent.value = {
@@ -185,6 +187,16 @@ const toggleIssueStateAll = () => {
     issues: issuesList
   };
 
+}
+
+const updateOpenStatus = () => {
+}
+
+const updateClosedStatus = () => {
+}
+
+const editIssues = () => {
+  isClickedEditIssues.value = !isClickedEditIssues.value;
 }
 </script>
 
@@ -393,22 +405,23 @@ const toggleIssueStateAll = () => {
   }
 
   .issuable-update-sidebar {
-    width: 30%;
+    visibility: hidden;
+    width: 0%;
     height: 39.5rem;
-    padding: .5rem 1rem;
-    margin-left: 1rem;
+    padding: .5rem 0rem;
     border-left: 1px solid rgb(225, 225, 225);
-    transition: all 0.3s ease-in-out;
     padding-right: 0;
+    transition: all 0.3s ease-in-out;
 
     .btns {
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 1.5rem;
     }
 
     .status {
+      display: none;
       width: 100%;
       position: relative;
 
@@ -434,72 +447,107 @@ const toggleIssueStateAll = () => {
       }
     }
   }
+
+  .edit {
+    visibility: visible;
+    width: 30%;
+    transition: all 0.3s ease-in-out;
+    padding: 0 1rem;
+    margin-left: 1rem;
+
+    .btns {
+      display: flex;
+    }
+
+    .status {
+      display: block;
+    }
+  }
 }
 
 @media screen and (max-width:990px) {
-  .top-area {
-    flex-direction: column-reverse;
+  .main-page {
+    .issuable-list-container {
+      .top-area {
+        flex-direction: column-reverse;
 
-    .nav-controls {
-      justify-content: flex-start !important;
-      margin-top: .5rem;
+        .nav-controls {
+          justify-content: flex-start !important;
+          margin-top: .5rem;
+        }
+      }
     }
   }
 }
 
 @media screen and (max-width:767px) {
+  .main-page {
 
-  .bread-crumb {
-    .bars-menu {
-      display: inline-block;
+    .bread-crumb {
+      .bars-menu {
+        display: inline-block;
+      }
     }
-  }
 
-  .issuable-list-container {
-    .top-area {
-      .nav-controls {
+    .issuable-list-container {
+      .top-area {
+        .nav-controls {
+          flex-direction: column;
+          margin-top: .5rem;
+
+          .btn {
+            width: 100%;
+            display: block;
+            text-align: center;
+          }
+
+          .import-export {
+            width: 100%;
+
+            .btn-group {
+              width: 100%;
+              height: 97%;
+            }
+          }
+        }
+      }
+
+      .filtered-search-input-container {
         flex-direction: column;
-        margin-top: .5rem;
 
-        .btn {
-          width: 100%;
-          display: block;
-          text-align: center;
+        .issuable-search-container {
+          .search-history {
+            width: 15%;
+          }
         }
 
-        .import-export {
+        .sort-dropdown-container {
           width: 100%;
 
+          .dropdown-content {
+            top: -11.1rem;
+            left: 14rem;
+          }
+
           .btn-group {
+            display: flex;
+            justify-content: space-between;
             width: 100%;
-            height: 97%;
           }
         }
       }
     }
 
-    .filtered-search-input-container {
-      flex-direction: column;
+    .issuable-update-sidebar {
+      width: 35%;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background-color: white;
+      z-index: 1;
 
-      .issuable-search-container {
-        .search-history {
-          width: 15%;
-        }
-      }
-
-      .sort-dropdown-container {
-        width: 100%;
-
-        .dropdown-content {
-          top: -11.1rem;
-          left: 14rem;
-        }
-
-        .btn-group {
-          display: flex;
-          justify-content: space-between;
-          width: 100%;
-        }
+      .btns {
+        margin-top: 5rem;
       }
     }
   }

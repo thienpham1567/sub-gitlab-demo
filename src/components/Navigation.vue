@@ -16,6 +16,7 @@ import { RouterLink } from 'vue-router';
 
 <style lang="scss" scoped>
 .header-content {
+  position: fixed;
   width: 100%;
   background-color: rgb(45, 0, 117);
   display: flex;
@@ -23,8 +24,14 @@ import { RouterLink } from 'vue-router';
   padding: .2rem .4rem;
   width: 100%;
   color: white;
+  z-index: 5;
 
   .logo {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     border-radius: 10px;
 
@@ -39,7 +46,6 @@ import { RouterLink } from 'vue-router';
   }
 
   .menu-btn {
-    font-size: large;
     display: flex;
     gap: .4rem;
     margin-left: 1rem;

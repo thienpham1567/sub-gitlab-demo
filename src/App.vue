@@ -44,9 +44,11 @@ const collapsed = () => {
 }
 
 .main-container {
+  position: absolute;
   display: flex;
   width: 100%;
   height: 100%;
+  top: 3.5rem;
 
   .sidebar {
     width: 19%;
