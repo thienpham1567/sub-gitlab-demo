@@ -43,13 +43,15 @@
                 <i class="fa-solid fa-chevron-down"></i>
               </RouterLink>
             </div>
-            <button @click="editIssues" :disabled="issuesStatePresent.issues.length === 0"
-              class="btn issue-btn border-light-grey">Edit
-              issues</button>
+            <button @click="editIssues" :disabled="makeEditBtnDisable" class="btn issue-btn border-light-grey"
+              :class="{ 'disable-btn': makeEditBtnDisable }">
+              Edit issues
+            </button>
             <RouterLink :to="{ name: 'create-issues' }" class="btn issue-btn new-btn">New issus</RouterLink>
           </div>
         </div>
         <div class="filtered-search-input-container">
+          <input @change="makeAllChecked" v-show="isClickedEditIssues" type="checkbox" ref="checkAll">
           <div class="issuable-search-container">
             <div class="btn-group square-right border-grey search-history">
               <i class="fa-solid fa-clock-rotate-left"></i>
@@ -125,7 +127,8 @@
     </div>
     <div class="issuable-update-sidebar" :class="{ edit: isClickedEditIssues }">
       <div class="btns">
-        <button class="btn issue-btn border-light-grey">Update all</button>
+        <button :disabled="isCheckedItemsEmpty" @click="updateAllIssues" class="btn issue-btn border-light-grey"
+          :class="{ 'disable-btn': isCheckedItemsEmpty }">Update all</button>
         <button @click="editIssues" class="btn issue-btn border-light-grey">Cancel</button>
       </div>
       <div class="status">
@@ -149,6 +152,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
+import { computed } from '@vue/reactivity';
 
 const store = useStore();
 const route = useRoute();
@@ -163,6 +167,7 @@ let issuesStatePresent = ref({
 });
 const isClickedEditIssues = ref(false);
 const checkedItems = ref([]);
+const checkAll = ref(null);
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
@@ -198,6 +203,23 @@ const updateClosedStatus = () => {
 const editIssues = () => {
   isClickedEditIssues.value = !isClickedEditIssues.value;
 }
+
+const makeAllChecked = () => {
+  if (checkAll.value.checked) {
+    for (let index = 0; index < 4; index++) {
+      checkedItems.value.push(index);
+    }
+  } else {
+    checkedItems.value = [];
+  }
+}
+
+const updateAllIssues = () => {
+
+}
+
+const isCheckedItemsEmpty = computed(() => checkedItems.value.length === 0);
+const makeEditBtnDisable = computed(() => issuesStatePresent.value.issues.length === 0 || isClickedEditIssues.value);
 </script>
 
 <style lang="scss">
