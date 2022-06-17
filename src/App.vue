@@ -4,8 +4,7 @@
   </header>
   <main>
     <div class="main-container">
-      <aside class="sidebar sidebar-mobile"
-        :class="{ collapsed: isCollapsed, 'toggle-sidebar-mobile': store.getters.toggleSidebar }">
+      <aside class="sidebar" :class="{ collapsed: isCollapsed, 'toggle-sidebar-mobile': store.getters.toggleSidebar }">
         <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" />
       </aside>
       <div class="view-pages">
@@ -50,7 +49,7 @@ const collapsed = () => {
   height: 100%;
 
   .sidebar {
-    width: 20%;
+    width: 19%;
     transition: all 0.3s ease-in-out;
   }
 
@@ -59,13 +58,15 @@ const collapsed = () => {
     display: block;
     margin: 0 auto;
     padding: .5rem 1rem;
-    font-size: .8rem;
+    font-size: .850rem;
   }
 }
 
-.main-container {
-  .toggle-sidebar-mobile {
-    left: 0;
+main {
+  .main-container {
+    .toggle-sidebar-mobile {
+      left: 0;
+    }
   }
 }
 
