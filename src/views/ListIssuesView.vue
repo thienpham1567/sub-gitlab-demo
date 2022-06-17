@@ -411,7 +411,7 @@ const editIssues = () => {
     padding: .5rem 0rem;
     border-left: 1px solid rgb(225, 225, 225);
     padding-right: 0;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.5s ease-in-out;
 
     .btns {
       display: none;
@@ -451,7 +451,7 @@ const editIssues = () => {
   .edit {
     visibility: visible;
     width: 30%;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.5s ease-in-out;
     padding: 0 1rem;
     margin-left: 1rem;
 
@@ -539,16 +539,20 @@ const editIssues = () => {
     }
 
     .issuable-update-sidebar {
-      width: 35%;
+      width: 50%;
       position: fixed;
       top: 0;
-      right: 0;
+      right: -100%;
       background-color: white;
       z-index: 1;
 
       .btns {
         margin-top: 5rem;
       }
+    }
+
+    .edit {
+      right: 0;
     }
   }
 }
