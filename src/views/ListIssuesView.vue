@@ -12,17 +12,17 @@
   <div class="issuable-list-container">
     <div class="top-area">
       <ul class="issuable-list-states">
-        <li class="item-state">
+        <li @click="toggleIssueStateOpen" class="item-state">
           <span>Open</span>
-          <span>5</span>
+          <span>{{ openIssues.length }}</span>
         </li>
-        <li class="item-state">
+        <li @click="toggleIssueStateClosed" class="item-state">
           <span>Closed</span>
-          <span>5</span>
+          <span>{{ closedIssues.length }}</span>
         </li>
-        <li class="item-state">
+        <li @click="toggleIssueStateAll" class="item-state">
           <span>All</span>
-          <span>5</span>
+          <span>{{ issuesList.length }}</span>
         </li>
       </ul>
       <div class="nav-controls">
@@ -41,7 +41,8 @@
             <i class="fa-solid fa-chevron-down"></i>
           </RouterLink>
         </div>
-        <button class="btn issue-btn border-light-grey">Edit issues</button>
+        <button :disabled="issuesStatePresent.issues.length === 0" class="btn issue-btn border-light-grey">Edit
+          issues</button>
         <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
       </div>
     </div>
@@ -75,8 +76,8 @@
         </div>
       </div>
     </div>
-    <ul class="issues-list">
-      <li v-for="(issue, index) in store.getters.issuesList" :key="index" class="issue">
+    <ul v-if="issuesStatePresent.issues.length > 0" class="issues-list">
+      <li v-for="(issue, index) in issuesStatePresent.issues" :key="index" class="issue">
         <div class="issuable-main-info">
           <div class="issue-title">
             <RouterLink :to="{ name: 'home' }">{{ issue.title }}</RouterLink>
@@ -98,9 +99,27 @@
         </div>
       </li>
     </ul>
+    <div v-else-if="issuesStatePresent.presentState === 'open'" class="none-of-issues">
+      <embed class="img"
+        src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
+        type="">
+      <h1>There are no open issues</h1>
+      <p>To keep this project going, create a new issue</p>
+      <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
+    </div>
+    <div v-else class="none-of-issues">
+      <embed class="img"
+        src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
+        type="">
+      <h1>There are no closed issues</h1>
+    </div>
+    <div></div>
     <div class="link">
       <button class="btn btn-link">Email a new issue to this project</button>
     </div>
+  </div>
+  <div class="issuable-update-sidebar">
+
   </div>
 </template>
 
@@ -115,8 +134,38 @@ const store = useStore();
 const route = useRoute();
 const isAscOrder = ref(true);
 
+const issuesList = store.getters.issuesList;
+const openIssues = store.getters.openIssues;
+const closedIssues = store.getters.closedIssues;
+let issuesStatePresent = ref({
+  presentState: "open",
+  issues: openIssues
+});
+
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
+}
+
+const toggleIssueStateOpen = () => {
+  issuesStatePresent.value = {
+    presentState: "open",
+    issues: openIssues
+  };
+
+}
+const toggleIssueStateClosed = () => {
+  issuesStatePresent.value = {
+    presentState: "closed",
+    issues: closedIssues
+  };
+
+}
+const toggleIssueStateAll = () => {
+  issuesStatePresent.value = {
+    presentState: "all",
+    issues: issuesList
+  };
+
 }
 </script>
 
@@ -145,7 +194,7 @@ const toggleMenu = () => {
         }
 
         :first-child {
-          margin-right: .5rem;
+          margin-right: .4rem;
         }
 
         :nth-child(2) {
@@ -303,6 +352,19 @@ const toggleMenu = () => {
         }
       }
 
+    }
+  }
+
+  .none-of-issues {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    gap: 1rem;
+
+    .img {
+      width: 17rem;
     }
   }
 

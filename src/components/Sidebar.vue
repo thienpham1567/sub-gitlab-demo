@@ -71,7 +71,7 @@ const makeClickItem = () => isClickedItem.value = true;
 const makeCollapsed = () => {
   emit('collapsedSidebar');
 }
-const lengthIssuesList = computed(() => store.getters.lengthIssuesList);
+const lengthIssuesList = computed(() => store.getters.issuesList.length);
 const closeMenu = () => {
   store.dispatch('toggle_menu');
 }

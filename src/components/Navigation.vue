@@ -1,6 +1,8 @@
 <template>
   <div class="header-content">
-    <img src="../assets/img/cupcake.png" class="bat-img" alt="">
+    <RouterLink :to="{ name: 'issues' }" class="logo">
+      <img src="../assets/img/gitlab-logo-500.png" alt="">
+    </RouterLink>
     <div class="menu-btn">
       <i class="fa-solid fa-bars"></i>
       <h5>Menu</h5>
@@ -9,22 +11,31 @@
 </template>
 
 <script setup>
-
+import { RouterLink } from 'vue-router';
 </script>
 
 <style lang="scss" scoped>
 .header-content {
-  background-color: rgb(65, 0, 117);
+  width: 100%;
+  background-color: rgb(45, 0, 117);
   display: flex;
   align-items: center;
   padding: .2rem .4rem;
   width: 100%;
   color: white;
 
-  .bat-img {
-    width: 3.5rem;
-    height: 3.5rem;
+  .logo {
     cursor: pointer;
+    border-radius: 10px;
+
+    img {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+
+    &:hover {
+      background-color: rgba(240, 240, 240, 0.3)
+    }
   }
 
   .menu-btn {

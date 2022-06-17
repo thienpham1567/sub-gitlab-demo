@@ -37,7 +37,6 @@ const collapsed = () => {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-weight: normal;
 }
 
 .header-nav {
@@ -56,11 +55,17 @@ const collapsed = () => {
   }
 
   .view-pages {
-    width: 80%;
+    width: 100%;
     display: block;
     margin: 0 auto;
     padding: .5rem 1rem;
     font-size: .8rem;
+  }
+}
+
+.main-container {
+  .toggle-sidebar-mobile {
+    left: 0;
   }
 }
 
@@ -94,10 +99,6 @@ const collapsed = () => {
         }
       }
     }
-
-    .view-pages {
-      width: 100%;
-    }
   }
 }
 
@@ -130,12 +131,6 @@ const collapsed = () => {
         }
       }
     }
-  }
-}
-
-.main-container {
-  .toggle-sidebar-mobile {
-    left: 0;
   }
 }
 </style>

@@ -16,7 +16,7 @@ const state = {
       state: true,
     },
     {
-      title: 'tes3',
+      title: 'test3',
       state: true,
     },
   ],
@@ -25,6 +25,9 @@ const state = {
 const mutations = {
   TOGGLE_MENU(state) {
     state.toggleSidebar = !state.toggleSidebar;
+  },
+  ADD_NEW_ISSUE(state, payload) {
+    state.issuesList.push(payload);
   },
 };
 
@@ -35,9 +38,8 @@ const actions = {
 };
 
 const getters = {
-  issuesList: (state) => state.issuesList,
-  lengthIssuesList: (state) => state.issuesList.length,
   toggleSidebar: (state) => state.toggleSidebar,
+  issuesList: (state) => state.issuesList,
   openIssues: (state) =>
     state.issuesList.filter((issue) => issue.state === true),
   closedIssues: (state) =>

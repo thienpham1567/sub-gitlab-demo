@@ -16,7 +16,7 @@
       <input type="text" name="title" v-model="issue.title">
     </div>
     <div class="btns">
-      <button @click="" class="issue-btn new-btn border-light-grey">Create issue</button>
+      <button @click="createNewIssue" class="issue-btn new-btn border-light-grey">Create issue</button>
       <button @click="backIntoIssues" class="btn issue-btn border-light-grey">Cancel</button>
     </div>
   </div>
@@ -44,6 +44,16 @@ const backIntoIssues = () => {
   router.push({ name: "issues" });
 }
 
+const createNewIssue = () => {
+  if (issue.title.length === 0) {
+    return;
+  }
+  store.commit("ADD_NEW_ISSUE", issue);
+  backIntoIssues();
+}
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +67,7 @@ const backIntoIssues = () => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border-top: 1px solid rgb(202, 202, 202);
+  border-top: 1px solid rgb(225, 225, 225);
 
   h1 {
     margin-top: .5rem;
