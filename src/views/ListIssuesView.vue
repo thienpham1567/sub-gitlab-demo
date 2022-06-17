@@ -134,7 +134,9 @@
       <div class="status">
         <label for="">Status</label>
         <button class="btn-group border-light-grey select-status">
-          <span>Select status</span>
+          <span ref="selectStatus">Select status</span>
+          <span v-if="isSelectedOpen">Open</span>
+          <span ref="closedStatus"></span>
           <i class="fa-solid fa-chevron-down"></i>
         </button>
         <div class="dropdown-content list-status">
@@ -157,6 +159,11 @@ import { computed } from '@vue/reactivity';
 const store = useStore();
 const route = useRoute();
 const isAscOrder = ref(true);
+const isClickedEditIssues = ref(false);
+
+const toggleMenu = () => {
+  store.dispatch('toggle_menu');
+}
 
 const issuesList = store.getters.issuesList;
 const openIssues = store.getters.openIssues;
@@ -165,14 +172,6 @@ let issuesStatePresent = ref({
   presentState: "open",
   issues: openIssues
 });
-const isClickedEditIssues = ref(false);
-const checkedItems = ref([]);
-const checkAll = ref(null);
-
-const toggleMenu = () => {
-  store.dispatch('toggle_menu');
-}
-
 const toggleIssueStateOpen = () => {
   issuesStatePresent.value = {
     presentState: "open",
@@ -194,14 +193,27 @@ const toggleIssueStateAll = () => {
 
 }
 
+const checkedItems = ref([]);
+const checkAll = ref(null);
+const selectStatus = ref(null);
+const closedStatus = ref(null);
+const isSelectedOpen = ref(false);
 const updateOpenStatus = () => {
+  selectStatus.value.style.display = "none";
+  closedStatus.value.innerText = "";
+  isSelectedOpen.value = true;
 }
 
 const updateClosedStatus = () => {
+  selectStatus.value.style.display = "none";
+  closedStatus.value.innerText = "Closed";
+  isSelectedOpen.value = false;
 }
 
 const editIssues = () => {
   isClickedEditIssues.value = !isClickedEditIssues.value;
+  checkedItems.value = [];
+  checkAll.value.checked = false;
 }
 
 const makeAllChecked = () => {
