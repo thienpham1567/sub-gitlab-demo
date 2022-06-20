@@ -1,23 +1,28 @@
 import { createStore } from 'vuex';
+import { uid } from 'uid';
 
 const state = {
   toggleSidebar: false,
   issuesList: [
     {
+      id: uid(6),
       title: 'test',
-      state: true,
+      status: true,
     },
     {
+      id: uid(6),
       title: 'test1',
-      state: true,
+      status: true,
     },
     {
+      id: uid(6),
       title: 'test2',
-      state: true,
+      status: true,
     },
     {
+      id: uid(6),
       title: 'test3',
-      state: true,
+      status: true,
     },
   ],
 };
@@ -28,6 +33,14 @@ const mutations = {
   },
   ADD_NEW_ISSUE(state, payload) {
     state.issuesList.push(payload);
+  },
+  CHANGE_STATUS_ISSUE(state, payload) {
+    state.issuesList.forEach((issue) => {
+      if (issue.id === payload.issueID) {
+        issue.status = payload.state;
+      }
+    });
+    console.log(state.issuesList);
   },
 };
 
@@ -45,10 +58,10 @@ const getters = {
     return state.issuesList;
   },
   openIssues(state) {
-    return state.issuesList.filter((issue) => issue.state === true);
+    return state.issuesList.filter((issue) => issue.status === true);
   },
   closedIssues(state) {
-    return state.issuesList.filter((issue) => issue.state !== true);
+    return state.issuesList.filter((issue) => issue.status !== true);
   },
 };
 

@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import { uid } from 'uid';
 import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -32,6 +33,7 @@ const store = useStore();
 
 
 const issue = reactive({
+  id: uid(6),
   title: "",
   state: true
 });

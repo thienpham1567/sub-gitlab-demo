@@ -51,8 +51,9 @@
             <button class="btn border-light-grey"><i class="fa-solid fa-plus"></i></button>
           </div>
         </div>
-        <ul class="issues-container">
-          <li v-for="(issue, index) in store.getters.openIssues" :key="index">
+        <ul class="issues-container" @drop="onDrop($event, true)" @dragenter.prevent @dragover.prevent>
+          <li v-for="(issue, index) in store.getters.openIssues" :key="issue.id" draggable="true"
+            @dragstart="dragStart($event, issue)">
             <span>{{ issue.title }}</span>
             <span>#{{ index }}</span>
           </li>
@@ -71,8 +72,9 @@
             <span>{{ closedIssues.length }}</span>
           </div>
         </div>
-        <ul class="issues-container">
-          <li v-for="(issue, index) in store.getters.closedIssues" :key="index">
+        <ul class="issues-container" @drop="onDrop($event, false)" @dragenter.prevent @dragover.prevent>
+          <li v-for="(issue, index) in store.getters.closedIssues" :key="issue.id" draggable="true"
+            @dragstart="dragStart($event, issue)">
             <span>{{ issue.title }}</span>
             <span>#{{ index }}</span>
           </li>
@@ -83,16 +85,31 @@
 </template>
 
 <script setup>
+import { computed } from '@vue/reactivity';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
+
 const route = useRoute();
 const store = useStore();
 
-const openIssues = store.getters.openIssues;
-const closedIssues = store.getters.closedIssues;
+const openIssues = computed(() => store.getters.openIssues);
+const closedIssues = computed(() => store.getters.closedIssues);
+const issuesList = computed(() => store.getters.issuesList);
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
+}
+
+const dragStart = (event, issue) => {
+  event.dataTransfer.dropEffect = "move";
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData('issueID', issue.id);
+}
+
+const onDrop = (event, status) => {
+  console.log("Drop");
+  const issueID = event.dataTransfer.getData('issueID');
+  store.commit("CHANGE_STATUS_ISSUE", { issueID: issueID, state: status });
 }
 
 
@@ -150,12 +167,10 @@ const toggleMenu = () => {
 .board-list {
   overflow-x: hidden;
   display: flex;
-  height: 31rem;
   padding: 1rem;
   gap: 1rem;
 
   .board {
-    overflow-y: scroll;
     display: block;
     width: 30%;
     background-color: rgb(237, 237, 237);
@@ -196,9 +211,13 @@ const toggleMenu = () => {
           align-items: center;
           font-size: 1rem;
           gap: .5rem;
-          color: rgb(109, 109, 109);
+          color: rgb(133, 133, 133);
 
           .btn {
+            width: 2.2rem;
+            height: 2.2rem;
+            cursor: pointer;
+
             i {
               color: rgb(109, 109, 109);
               font-size: 1rem;
@@ -209,20 +228,28 @@ const toggleMenu = () => {
       }
 
       .issues-container {
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+        width: 100%;
+        height: 27rem;
         list-style: none;
+        padding-right: .5rem;
 
         li {
+          height: 3.3rem;
           display: flex;
+          justify-content: center;
           flex-direction: column;
-          padding: .8rem .5rem;
+          padding: 1rem .5rem;
           background-color: white;
           margin-bottom: .5rem;
           border-radius: 5px;
           gap: .2rem;
           cursor: grab;
+          font-size: .8rem;
 
           :first-child {
-            font-weight: 500;
+            font-weight: 600;
           }
         }
       }

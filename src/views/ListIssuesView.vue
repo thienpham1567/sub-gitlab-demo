@@ -82,7 +82,7 @@
           </div>
         </div>
         <ul v-if="issuesStatePresent.issues.length > 0" class="issues-list">
-          <li v-for="(issue, index) in issuesStatePresent.issues" :key="index" class="issue">
+          <li v-for="(issue, index) in issuesStatePresent.issues" :key="issue.id" class="issue">
             <div class="issuable-main-info">
               <input v-show="isClickedEditIssues" type="checkbox" :value="index" v-model="checkedItems">
               <div class="issue-title">
@@ -204,7 +204,7 @@ const editStatus = (status) => {
     for (let i = 0; i < checkedItems.value.length; i++) {
       if (index === checkedItems.value[i]) {
         console.log("change");
-        issue.state = (status === "open" ? true : false);
+        issue.status = (status === "open" ? true : false);
         break;
       }
     }
