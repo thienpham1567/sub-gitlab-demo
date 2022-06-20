@@ -38,12 +38,18 @@ const actions = {
 };
 
 const getters = {
-  toggleSidebar: (state) => state.toggleSidebar,
-  issuesList: (state) => state.issuesList,
-  openIssues: (state) =>
-    state.issuesList.filter((issue) => issue.state === true),
-  closedIssues: (state) =>
-    state.issuesList.filter((issue) => issue.state !== true),
+  toggleSidebar(state) {
+    return state.toggleSidebar;
+  },
+  issuesList(state) {
+    return state.issuesList;
+  },
+  openIssues(state) {
+    return state.issuesList.filter((issue) => issue.state === true);
+  },
+  closedIssues(state) {
+    return state.issuesList.filter((issue) => issue.state !== true);
+  },
 };
 
 const store = createStore({

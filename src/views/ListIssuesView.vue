@@ -165,9 +165,9 @@ const toggleMenu = () => {
   store.dispatch('toggle_menu');
 }
 
-const issuesList = store.getters.issuesList;
-const openIssues = store.getters.openIssues;
-const closedIssues = store.getters.closedIssues;
+const issuesList = computed(() => store.getters.issuesList);
+const openIssues = computed(() => store.getters.openIssues);
+const closedIssues = computed(() => store.getters.closedIssues);
 let issuesStatePresent = ref({
   presentState: "open",
   issues: openIssues
@@ -198,6 +198,21 @@ const checkAll = ref(null);
 const selectStatus = ref(null);
 const closedStatus = ref(null);
 const isSelectedOpen = ref(false);
+
+const editStatus = (status) => {
+  issuesStatePresent.value.issues.forEach((issue, index) => {
+    for (let i = 0; i < checkedItems.value.length; i++) {
+      if (index === checkedItems.value[i]) {
+        console.log("change");
+        issue.state = (status === "open" ? true : false);
+        break;
+      }
+    }
+  });
+  console.log(issuesStatePresent.value.issues);
+  console.log(issuesList.value);
+}
+
 const updateOpenStatus = () => {
   selectStatus.value.style.display = "none";
   closedStatus.value.innerText = "";
@@ -218,7 +233,7 @@ const editIssues = () => {
 
 const makeAllChecked = () => {
   if (checkAll.value.checked) {
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < issuesList.value.length; index++) {
       checkedItems.value.push(index);
     }
   } else {
@@ -227,7 +242,12 @@ const makeAllChecked = () => {
 }
 
 const updateAllIssues = () => {
-
+  if (isSelectedOpen.value) {
+    editStatus("open");
+  } else {
+    editStatus("closed");
+  }
+  editIssues();
 }
 
 const isCheckedItemsEmpty = computed(() => checkedItems.value.length === 0);
@@ -470,6 +490,7 @@ const makeEditBtnDisable = computed(() => issuesStatePresent.value.issues.length
         top: 3.7rem;
 
         li {
+          cursor: pointer;
           width: 100%;
         }
       }
