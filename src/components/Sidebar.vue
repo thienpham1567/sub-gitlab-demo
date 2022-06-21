@@ -22,20 +22,20 @@
             <RouterLink :to="{ name: 'issues' }">List</RouterLink>
           </li>
           <li>
-            <RouterLink :to="{ name: 'issue-boards' }">Broad</RouterLink>
+            <RouterLink :to="{ name: 'issue-boards' }">Boards</RouterLink>
           </li>
         </ul>
         <div class="content-tooltip">
           <div class="content-title">
             <span class="title">Issues</span>
-            <span class="counter">{{ store.getters.lengthIssuesList }}</span>
+            <span class="counter">{{ lengthIssuesList }}</span>
           </div>
           <ul class="content-in-item">
             <li>
               <RouterLink :to="{ name: 'issues' }">List</RouterLink>
             </li>
             <li>
-              <RouterLink :to="{ name: 'issue-boards' }">Broad</RouterLink>
+              <RouterLink :to="{ name: 'issue-boards' }">Boards</RouterLink>
             </li>
           </ul>
         </div>
@@ -161,6 +161,7 @@ const closeMenu = () => {
       .tooltip-issues {
         position: relative;
         width: 100%;
+        z-index: 10;
 
         .content-tooltip {
 

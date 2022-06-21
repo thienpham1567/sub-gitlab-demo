@@ -29,8 +29,12 @@
         </div>
       </div>
       <div class="half-right-content">
-        <div class="board-labels">
+        <div class="boards-label">
           <span>Show labels</span>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-label" checked>
+            <span class="toggle-btn"></span>
+          </label>
         </div>
         <button class="btn issue-btn border-light-grey">Edit board</button>
         <button class="issue-btn new-btn border-light-grey">Create list</button>
@@ -48,7 +52,15 @@
           <div class="new-issue-board">
             <i class="fa-solid fa-folder"></i>
             <span>{{ openIssues.length }}</span>
-            <button class="btn border-light-grey"><i class="fa-solid fa-plus"></i></button>
+            <button @click="insertIssue" class="btn border-light-grey"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+        <div v-if="clickNewIssueBtn" class="issue-input create-issue">
+          <label for="">Title</label>
+          <input type="text" v-model="title">
+          <div class="btns">
+            <button @click="createNewIssue" class="issue-btn new-btn border-light-grey">Create issue</button>
+            <button @click="cancel" class="btn issue-btn border-light-grey">Cancel</button>
           </div>
         </div>
         <ul class="issues-container" @drop="onDrop($event, true)" @dragenter.prevent @dragover.prevent>
@@ -88,13 +100,14 @@
 import { computed } from '@vue/reactivity';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
+import { ref } from 'vue';
+import { uid } from 'uid';
 
 const route = useRoute();
 const store = useStore();
 
 const openIssues = computed(() => store.getters.openIssues);
 const closedIssues = computed(() => store.getters.closedIssues);
-const issuesList = computed(() => store.getters.issuesList);
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
@@ -110,6 +123,30 @@ const onDrop = (event, status) => {
   console.log("Drop");
   const issueID = event.dataTransfer.getData('issueID');
   store.commit("CHANGE_STATUS_ISSUE", { issueID: issueID, state: status });
+}
+
+const title = ref("");
+const createNewIssue = () => {
+  if (title.value.length === 0) {
+    return;
+  }
+  const newIssue = {
+    id: uid(6),
+    title: title.value,
+    status: true,
+  }
+  store.commit("ADD_NEW_ISSUE", newIssue);
+  title.value = "";
+  cancel();
+}
+
+const clickNewIssueBtn = ref(false)
+const cancel = () => {
+  clickNewIssueBtn.value = false
+}
+
+const insertIssue = () => {
+  clickNewIssueBtn.value = !clickNewIssueBtn.value;
 }
 
 
@@ -132,7 +169,7 @@ const onDrop = (event, status) => {
     .half-left-content {
       display: flex;
       align-items: center;
-      width: 68%;
+      width: 65%;
       gap: .5rem;
 
       .development-btn {
@@ -157,15 +194,39 @@ const onDrop = (event, status) => {
     .half-right-content {
       display: flex;
       align-items: center;
-      width: 32%;
+      width: 35%;
       gap: .5rem;
+
+      .boards-label {
+        display: flex;
+        align-items: center;
+        width: 36%;
+        height: 100%;
+        padding: 0 .3rem;
+
+        span {
+          width: 50%;
+        }
+
+        .toggle {
+          width: 50%;
+          height: 1.5rem;
+          position: relative;
+          display: flex;
+          align-items: center;
+
+        }
+      }
+
+      .issue-btn {
+        width: 32%;
+      }
     }
 
   }
 }
 
 .board-list {
-  overflow-x: hidden;
   display: flex;
   padding: 1rem;
   gap: 1rem;
@@ -253,6 +314,24 @@ const onDrop = (event, status) => {
           }
         }
       }
+
+      .create-issue {
+        background-color: white;
+        padding: 1rem;
+        margin-bottom: .3rem;
+        border-radius: 5px;
+
+        .btns {
+          margin-top: .5rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .new-btn {
+            width: 7rem;
+          }
+        }
+      }
     }
   }
 }
@@ -268,14 +347,28 @@ const onDrop = (event, status) => {
       }
 
       .half-right-content {
-        width: 100%;
+        width: 60%;
+
+        .boards-label {
+          width: 50%;
+
+          span {
+            width: 100%;
+          }
+
+          .toggle {
+            width: 70%;
+          }
+        }
       }
 
     }
   }
 
   .board-list {
-    height: 28rem;
+    .board {
+      width: 100%;
+    }
   }
 
 }
@@ -324,13 +417,33 @@ const onDrop = (event, status) => {
         align-items: flex-start;
         width: 100%;
 
-        button {
+        .issue-btn {
           display: block;
           width: 100%;
         }
 
+        .boards-label {
+          width: 100%;
+
+          span {
+            width: 20%;
+          }
+
+          .toggle {
+            width: 18%;
+
+          }
+        }
+
       }
 
+    }
+  }
+
+  .board-list {
+
+    .board {
+      width: 100%;
     }
   }
 }

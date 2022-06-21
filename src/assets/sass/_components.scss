@@ -227,3 +227,24 @@
   cursor: no-drop;
   background-color: rgb(199, 199, 199);
 }
+
+.issue-input {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-weight: 500;
+    margin-bottom: .5rem;
+  }
+
+  input {
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid grey;
+    padding: .3rem .5rem;
+
+    &:focus {
+      outline: 2px solid rgb(0, 140, 255);
+    }
+  }
+}

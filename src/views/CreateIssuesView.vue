@@ -13,7 +13,7 @@
     <h1>New Issue</h1>
     <div class="issue-input">
       <label for="">Title (required)</label>
-      <input type="text" name="title" v-model="issue.title">
+      <input type="text" name="title" v-model="title">
     </div>
     <div class="btns">
       <button @click="createNewIssue" class="issue-btn new-btn border-light-grey">Create issue</button>
@@ -24,7 +24,7 @@
 
 <script setup>
 import { uid } from 'uid';
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const route = useRoute();
@@ -32,11 +32,7 @@ const router = useRouter();
 const store = useStore();
 
 
-const issue = reactive({
-  id: uid(6),
-  title: "",
-  state: true
-});
+const title = ref("");
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
@@ -47,10 +43,16 @@ const backIntoIssues = () => {
 }
 
 const createNewIssue = () => {
-  if (issue.title.length === 0) {
+  if (title.value.length === 0) {
     return;
   }
-  store.commit("ADD_NEW_ISSUE", issue);
+  const newIssue = {
+    id: uid(6),
+    title: title.value,
+    status: true,
+  }
+  store.commit("ADD_NEW_ISSUE", newIssue);
+  title.value = "";
   backIntoIssues();
 }
 
@@ -73,27 +75,6 @@ const createNewIssue = () => {
 
   h1 {
     margin-top: .5rem;
-  }
-
-  .issue-input {
-    display: flex;
-    flex-direction: column;
-
-    label {
-      font-weight: 500;
-      margin-bottom: .5rem;
-    }
-
-    input {
-      outline: none;
-      border-radius: 5px;
-      border: 1px solid grey;
-      padding: .3rem .5rem;
-
-      &:focus {
-        outline: 2px solid rgb(0, 140, 255);
-      }
-    }
   }
 
   .btns {

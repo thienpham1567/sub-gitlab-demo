@@ -66,16 +66,16 @@
           </div>
           <div class="sort-dropdown-container">
             <div class="btn-group square-right border-grey">
-              <span>Title</span>
+              <span ref="sort-by">Title</span>
               <i class="fa-solid fa-chevron-down"></i>
               <ul class="dropdown-content">
-                <li>Priority</li>
-                <li>Created date</li>
-                <li>Updated date</li>
-                <li>Title</li>
+                <li @click="" ref="priority">Priority</li>
+                <li @click="" ref="createDate">Created date</li>
+                <li @click="" ref="updateDate">Updated date</li>
+                <li @click="" ref="title">Title</li>
               </ul>
             </div>
-            <div class="btn btn-helper">
+            <div @click="changeOrderIssues" class="btn btn-helper">
               <i v-if="isAscOrder" class="fa-solid fa-arrow-up-short-wide"></i>
               <i v-else class="fa-solid fa-arrow-down-wide-short"></i>
             </div>
@@ -160,6 +160,13 @@ const store = useStore();
 const route = useRoute();
 const isAscOrder = ref(true);
 const isClickedEditIssues = ref(false);
+
+const changeOrderIssues = () => {
+  isAscOrder.value = !isAscOrder.value;
+  if (!isAscOrder.value) {
+  } else {
+  }
+}
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
