@@ -51,7 +51,7 @@ const createNewIssue = () => {
     title: title.value,
     status: true,
   }
-  store.commit("ADD_NEW_ISSUE", newIssue);
+  store.dispatch("add_new_issue", newIssue);
   title.value = "";
   backIntoIssues();
 }

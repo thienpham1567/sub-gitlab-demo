@@ -163,9 +163,7 @@ const isClickedEditIssues = ref(false);
 
 const changeOrderIssues = () => {
   isAscOrder.value = !isAscOrder.value;
-  if (!isAscOrder.value) {
-  } else {
-  }
+  store.dispatch('order_list');
 }
 
 const toggleMenu = () => {
@@ -216,8 +214,6 @@ const editStatus = (status) => {
       }
     }
   });
-  console.log(issuesStatePresent.value.issues);
-  console.log(issuesList.value);
 }
 
 const updateOpenStatus = () => {
@@ -259,6 +255,12 @@ const updateAllIssues = () => {
 
 const isCheckedItemsEmpty = computed(() => checkedItems.value.length === 0);
 const makeEditBtnDisable = computed(() => issuesStatePresent.value.issues.length === 0 || isClickedEditIssues.value);
+
+const priority = ref(null);
+const createDate = ref(null);
+const updateDate = ref(null);
+const title = ref(null);
+
 </script>
 
 <style lang="scss">

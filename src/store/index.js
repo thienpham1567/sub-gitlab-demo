@@ -40,13 +40,24 @@ const mutations = {
         issue.status = payload.state;
       }
     });
-    console.log(state.issuesList);
+  },
+  ORDER_LIST(state) {
+    state.issuesList = state.issuesList.reverse();
   },
 };
 
 const actions = {
-  toggle_menu(context) {
-    context.commit('TOGGLE_MENU');
+  toggle_menu({ commit }) {
+    commit('TOGGLE_MENU');
+  },
+  add_new_issue({ commit }, payload) {
+    commit('ADD_NEW_ISSUE', payload);
+  },
+  change_status_issue({ commit }, payload) {
+    commit('CHANGE_STATUS_ISSUE', payload);
+  },
+  order_list({ commit }) {
+    commit('ORDER_LIST');
   },
 };
 

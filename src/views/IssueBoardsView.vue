@@ -122,7 +122,7 @@ const dragStart = (event, issue) => {
 const onDrop = (event, status) => {
   console.log("Drop");
   const issueID = event.dataTransfer.getData('issueID');
-  store.commit("CHANGE_STATUS_ISSUE", { issueID: issueID, state: status });
+  store.dispatch("change_status_issue", { issueID: issueID, state: status });
 }
 
 const title = ref("");
@@ -135,7 +135,7 @@ const createNewIssue = () => {
     title: title.value,
     status: true,
   }
-  store.commit("ADD_NEW_ISSUE", newIssue);
+  store.dispatch("add_new_issue", newIssue);
   title.value = "";
   cancel();
 }
