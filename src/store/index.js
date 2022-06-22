@@ -6,22 +6,22 @@ const state = {
   issuesList: [
     {
       id: uid(6),
-      title: 'test',
+      title: 'btest',
       status: true,
     },
     {
       id: uid(6),
-      title: 'test1',
+      title: 'ztest1',
       status: true,
     },
     {
       id: uid(6),
-      title: 'test2',
+      title: 'atest2',
       status: true,
     },
     {
       id: uid(6),
-      title: 'test3',
+      title: 'ctest3',
       status: true,
     },
   ],
@@ -44,6 +44,11 @@ const mutations = {
   ORDER_LIST(state) {
     state.issuesList = state.issuesList.reverse();
   },
+  SORT_BY_TITLE(state) {
+    state.issuesList.sort((issue1, issue2) =>
+      issue1.title.localeCompare(issue2.title),
+    );
+  },
 };
 
 const actions = {
@@ -58,6 +63,9 @@ const actions = {
   },
   order_list({ commit }) {
     commit('ORDER_LIST');
+  },
+  sort_by_title({ commit }) {
+    commit('SORT_BY_TITLE');
   },
 };
 

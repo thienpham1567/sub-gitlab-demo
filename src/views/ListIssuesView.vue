@@ -58,21 +58,20 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="filtered-search-input">
-              <input type="text" name="" placeholder="Search or filter results">
+              <input type="text" v-model="searchInput" placeholder="Search or filter results...">
             </div>
-            <div class="btn btn-helper">
+            <div @click="toggleSearch" class="btn btn-helper">
               <i class="fa-solid fa-magnifying-glass"></i>
             </div>
           </div>
           <div class="sort-dropdown-container">
             <div class="btn-group square-right border-grey">
-              <span ref="sort-by">Title</span>
+              <span ref="sortBy"></span>
               <i class="fa-solid fa-chevron-down"></i>
               <ul class="dropdown-content">
-                <li @click="" ref="priority">Priority</li>
-                <li @click="" ref="createDate">Created date</li>
-                <li @click="" ref="updateDate">Updated date</li>
-                <li @click="" ref="title">Title</li>
+                <li @click="orderByTitle">Title</li>
+                <li @click="orderByCreateDate">Created date</li>
+                <li @click="orderByUpdateDate">Updated date</li>
               </ul>
             </div>
             <div @click="changeOrderIssues" class="btn btn-helper">
@@ -150,7 +149,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
@@ -158,13 +157,7 @@ import { computed } from '@vue/reactivity';
 
 const store = useStore();
 const route = useRoute();
-const isAscOrder = ref(true);
 const isClickedEditIssues = ref(false);
-
-const changeOrderIssues = () => {
-  isAscOrder.value = !isAscOrder.value;
-  store.dispatch('order_list');
-}
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
@@ -198,11 +191,15 @@ const toggleIssueStateAll = () => {
 
 }
 
+// Handle edit btn
 const checkedItems = ref([]);
 const checkAll = ref(null);
 const selectStatus = ref(null);
 const closedStatus = ref(null);
 const isSelectedOpen = ref(false);
+
+const isCheckedItemsEmpty = computed(() => checkedItems.value.length === 0);
+const makeEditBtnDisable = computed(() => issuesStatePresent.value.issues.length === 0 || isClickedEditIssues.value);
 
 const editStatus = (status) => {
   issuesStatePresent.value.issues.forEach((issue, index) => {
@@ -253,13 +250,38 @@ const updateAllIssues = () => {
   editIssues();
 }
 
-const isCheckedItemsEmpty = computed(() => checkedItems.value.length === 0);
-const makeEditBtnDisable = computed(() => issuesStatePresent.value.issues.length === 0 || isClickedEditIssues.value);
+//handle search input
+const searchInput = ref("");
 
-const priority = ref(null);
-const createDate = ref(null);
-const updateDate = ref(null);
-const title = ref(null);
+const toggleSearch = () => {
+
+}
+
+
+// handle sort dropdown btn
+const sortBy = ref(null);
+const isAscOrder = ref(true);
+onMounted(() => {
+  orderByTitle();
+});
+
+const changeOrderIssues = () => {
+  isAscOrder.value = !isAscOrder.value;
+  store.dispatch('order_list');
+}
+
+const orderByTitle = () => {
+  sortBy.value.innerText = "Title";
+  store.dispatch("sort_by_title");
+}
+
+const orderByCreateDate = () => {
+  sortBy.value.innerText = "Created date";
+}
+
+const orderByUpdateDate = () => {
+  sortBy.value.innerText = "Update date";
+}
 
 </script>
 
@@ -354,7 +376,10 @@ const title = ref(null);
           width: 100%;
 
           .search-history {
-            width: 8%;
+            width: 9%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
             &:hover {
               background-color: rgb(226, 226, 226);
@@ -374,8 +399,15 @@ const title = ref(null);
           display: flex;
           position: relative;
           z-index: 1;
+          width: 20%;
+
+          span {
+            margin-right: auto;
+          }
 
           .btn-group {
+            width: 100%;
+
             &:hover {
               .dropdown-content {
                 display: flex;
