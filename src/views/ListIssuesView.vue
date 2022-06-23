@@ -96,6 +96,7 @@
             </div>
             <div class="issuable-meta">
               <div class="comments">
+                <span v-if="!issue.status">CLOSED</span>
                 <i class="fa-solid fa-comments"></i>
                 <span>0</span>
               </div>
@@ -509,11 +510,19 @@ const orderByUpdateDate = () => {
           }
 
           .issuable-meta {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+
             .comments {
               display: flex;
               align-items: center;
               justify-content: flex-end;
               gap: .3rem;
+
+              :first-child {
+                margin-right: .5rem;
+              }
             }
           }
 

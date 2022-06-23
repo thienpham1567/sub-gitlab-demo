@@ -5,7 +5,7 @@
   <main>
     <div class="main-container">
       <aside class="sidebar" :class="{ collapsed: isCollapsed, 'toggle-sidebar-mobile': store.getters.toggleSidebar }">
-        <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" />
+        <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" @changeIconCollapsed="changeCollapsed" />
       </aside>
       <div class="view-pages">
         <RouterView />
@@ -26,6 +26,10 @@ const isCollapsed = ref(false);
 
 const collapsed = () => {
   isCollapsed.value = !isCollapsed.value;
+}
+
+const changeCollapsed = () => {
+  isCollapsed.value = true
 }
 
 </script>

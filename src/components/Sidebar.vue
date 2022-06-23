@@ -56,16 +56,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { computed } from '@vue/reactivity';
 
-const emit = defineEmits(['collapsedSidebar']);
+const emit = defineEmits(['collapsedSidebar', 'changeIconCollapsed']);
 const props = defineProps({
   isCollapsed: Boolean,
 });
 const store = useStore();
 const isClickedItem = ref(false);
+
+onMounted(() => {
+  window.addEventListener("resize", getCurrentWidthPage)
+});
 
 const makeClickItem = () => isClickedItem.value = true;
 const makeCollapsed = () => {
@@ -75,6 +79,18 @@ const lengthIssuesList = computed(() => store.getters.issuesList.length);
 const closeMenu = () => {
   store.dispatch('toggle_menu');
 }
+
+const widthPage = ref();
+
+const getCurrentWidthPage = () => {
+  widthPage.value = window.innerWidth;
+  if (widthPage.value <= 1200) {
+    emit('changeIconCollapsed')
+  }
+}
+
+
+
 
 </script>
 
