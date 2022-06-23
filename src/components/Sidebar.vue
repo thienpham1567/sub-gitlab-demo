@@ -81,7 +81,7 @@ const closeMenu = () => {
 <style lang="scss">
 .sidebar-container {
   width: 100%;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(240, 240, 240);
   height: 100vh;
   display: flex;
   flex-direction: column;

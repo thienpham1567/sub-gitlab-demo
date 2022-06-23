@@ -14,15 +14,15 @@
       <div class="issuable-list-container">
         <div class="top-area">
           <ul class="issuable-list-states">
-            <li @click="toggleIssueStateOpen" class="item-state">
+            <li @click="toggleIssueStateOpen" ref="openState" class="item-state">
               <span>Open</span>
               <span>{{ openIssues.length }}</span>
             </li>
-            <li @click="toggleIssueStateClosed" class="item-state">
+            <li @click="toggleIssueStateClosed" ref="closedState" class="item-state">
               <span>Closed</span>
               <span>{{ closedIssues.length }}</span>
             </li>
-            <li @click="toggleIssueStateAll" class="item-state">
+            <li @click="toggleIssueStateAll" ref="allState" class="item-state">
               <span>All</span>
               <span>{{ issuesList.length }}</span>
             </li>
@@ -59,6 +59,7 @@
             </div>
             <div class="filtered-search-input">
               <input type="text" v-model="searchInput" placeholder="Search or filter results...">
+              <i @click="clearInput" v-show="searchInput.length > 0" class="fa-solid fa-circle-xmark clear-input"></i>
             </div>
             <div @click="toggleSearch" class="btn btn-helper">
               <i class="fa-solid fa-magnifying-glass"></i>
@@ -110,6 +111,14 @@
             type="">
           <h1>There are no open issues</h1>
           <p>To keep this project going, create a new issue</p>
+          <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
+        </div>
+        <div v-else-if="issuesStatePresent.presentState === 'searchResults'" class="none-of-issues">
+          <embed class="img"
+            src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
+            type="">
+          <h1>Sorry, your filter produced no results</h1>
+          <p>To widen your search, change or remove filters above</p>
           <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
         </div>
         <div v-else class="none-of-issues">
@@ -166,17 +175,27 @@ const toggleMenu = () => {
 const issuesList = computed(() => store.getters.issuesList);
 const openIssues = computed(() => store.getters.openIssues);
 const closedIssues = computed(() => store.getters.closedIssues);
+const openState = ref(null);
+const closedState = ref(null);
+const allState = ref(null);
+
 let issuesStatePresent = ref({
   presentState: "open",
   issues: openIssues
 });
 const toggleIssueStateOpen = () => {
+  openState.value.classList.add("item-state-clicked");
+  closedState.value.classList.remove("item-state-clicked");
+  allState.value.classList.remove("item-state-clicked");
   issuesStatePresent.value = {
     presentState: "open",
     issues: openIssues
   };
 }
 const toggleIssueStateClosed = () => {
+  openState.value.classList.remove("item-state-clicked");
+  closedState.value.classList.add("item-state-clicked");
+  allState.value.classList.remove("item-state-clicked");
   issuesStatePresent.value = {
     presentState: "closed",
     issues: closedIssues
@@ -184,6 +203,9 @@ const toggleIssueStateClosed = () => {
 
 }
 const toggleIssueStateAll = () => {
+  openState.value.classList.remove("item-state-clicked");
+  closedState.value.classList.remove("item-state-clicked");
+  allState.value.classList.add("item-state-clicked");
   issuesStatePresent.value = {
     presentState: "all",
     issues: issuesList
@@ -252,9 +274,29 @@ const updateAllIssues = () => {
 
 //handle search input
 const searchInput = ref("");
+const searchResults = computed(() => store.getters.searchResults);
 
 const toggleSearch = () => {
+  if (searchInput.value.length > 0) {
+    store.dispatch("toggle_search_input", { input: searchInput.value });
+    issuesStatePresent.value = {
+      presentState: "searchResults",
+      issues: searchResults
+    }
+  } else {
+    if (openState.value.classList.contains("item-state-clicked")) {
+      toggleIssueStateOpen();
+    } else if (closedState.value.classList.contains("item-state-clicked")) {
+      toggleIssueStateClosed();
+    } else {
+      toggleIssueStateAll();
+    }
+  }
+}
 
+const clearInput = () => {
+  searchInput.value = "";
+  toggleSearch();
 }
 
 
@@ -262,6 +304,7 @@ const toggleSearch = () => {
 const sortBy = ref(null);
 const isAscOrder = ref(true);
 onMounted(() => {
+  toggleIssueStateOpen();
   orderByTitle();
 });
 
@@ -374,6 +417,18 @@ const orderByUpdateDate = () => {
           display: flex;
           background-color: white;
           width: 100%;
+
+          .filtered-search-input {
+            position: relative;
+
+            .clear-input {
+              cursor: pointer;
+              font-size: 1.275rem;
+              position: absolute;
+              top: .6rem;
+              right: .4rem;
+            }
+          }
 
           .search-history {
             width: 9%;

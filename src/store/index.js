@@ -16,15 +16,16 @@ const state = {
     },
     {
       id: uid(6),
-      title: 'atest2',
+      title: 'atest2 2',
       status: true,
     },
     {
       id: uid(6),
-      title: 'ctest3',
+      title: 'atest2 1',
       status: true,
     },
   ],
+  searchResults: [],
 };
 
 const mutations = {
@@ -49,6 +50,13 @@ const mutations = {
       issue1.title.localeCompare(issue2.title),
     );
   },
+  TOGGLE_SEARCH_INPUT(state, payload) {
+    if (payload.input.length > 0) {
+      state.searchResults = state.issuesList.filter((issue) =>
+        issue.title.includes(payload.input),
+      );
+    }
+  },
 };
 
 const actions = {
@@ -67,6 +75,9 @@ const actions = {
   sort_by_title({ commit }) {
     commit('SORT_BY_TITLE');
   },
+  toggle_search_input({ commit }, payload) {
+    commit('TOGGLE_SEARCH_INPUT', payload);
+  },
 };
 
 const getters = {
@@ -81,6 +92,9 @@ const getters = {
   },
   closedIssues(state) {
     return state.issuesList.filter((issue) => issue.status !== true);
+  },
+  searchResults(state) {
+    return state.searchResults;
   },
 };
 
