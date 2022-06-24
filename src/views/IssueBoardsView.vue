@@ -376,8 +376,24 @@ const insertIssue = () => {
 
 @media screen and (max-width:767px) {
   .bread-crumb {
+    width: 100%;
+
     .bars-menu {
       display: inline-block;
+    }
+
+    li {
+      text-align: center;
+
+    }
+
+    :nth-child(2) {
+      padding-left: 1rem;
+    }
+
+    li+li::before {
+
+      padding: 0;
     }
   }
 

@@ -147,6 +147,16 @@ main {
 
         z-index: 2;
 
+        .collapsed {
+          .list-sidebar {
+            .tooltip-issues {
+              .content-in-item {
+                display: block;
+              }
+            }
+          }
+        }
+
         .sidebar-container {
           width: 60%;
 
@@ -163,8 +173,6 @@ main {
             }
 
             .tooltip-issues {
-              width: 100%;
-
               .content-in-item {
                 visibility: visible;
               }
