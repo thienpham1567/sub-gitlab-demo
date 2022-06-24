@@ -631,6 +631,15 @@ const orderByUpdateDate = () => {
         }
       }
     }
+
+    .filtered-search-input-container {
+      .sort-dropdown-container {
+        .dropdown-content {
+          top: 2.5rem;
+          left: -4.2rem;
+        }
+      }
+    }
   }
 }
 
@@ -670,7 +679,7 @@ const orderByUpdateDate = () => {
 
         .issuable-search-container {
           .search-history {
-            width: 15%;
+            width: 19%;
           }
         }
 
@@ -678,8 +687,13 @@ const orderByUpdateDate = () => {
           width: 100%;
 
           .dropdown-content {
-            top: -11.1rem;
-            left: 14rem;
+            width: inherit;
+            top: -9.2rem;
+            left: 0rem;
+
+            li {
+              width: inherit;
+            }
           }
 
           .btn-group {

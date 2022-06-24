@@ -52,4 +52,14 @@ import { RouterLink } from 'vue-router';
     cursor: pointer;
   }
 }
+
+@media screen and (max-width:767px) {
+  .header-content {
+    justify-content: space-between;
+
+    .menu-btn {
+      padding-right: 1rem;
+    }
+  }
+}
 </style>

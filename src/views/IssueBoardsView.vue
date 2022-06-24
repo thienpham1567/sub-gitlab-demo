@@ -377,6 +377,7 @@ const insertIssue = () => {
 @media screen and (max-width:767px) {
   .bread-crumb {
     width: 100%;
+    font-size: .750rem;
 
     .bars-menu {
       display: inline-block;
@@ -392,7 +393,6 @@ const insertIssue = () => {
     }
 
     li+li::before {
-
       padding: 0;
     }
   }
@@ -416,7 +416,7 @@ const insertIssue = () => {
         }
 
         .new-board-btn {
-          width: 22%;
+          width: 32%;
         }
 
         .search {
@@ -443,12 +443,11 @@ const insertIssue = () => {
           width: 100%;
 
           span {
-            width: 20%;
+            width: 40%;
           }
 
           .toggle {
-            width: 18%;
-
+            width: 100%;
           }
         }
 
