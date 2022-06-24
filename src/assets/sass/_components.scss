@@ -68,6 +68,24 @@
   font-weight: bold;
 }
 
+.collapsed {
+  width: 7%;
+  transition: all 0.3s ease-in-out;
+
+  .content-in-item {
+    display: none;
+  }
+
+  .content {
+    display: none;
+  }
+
+  .collapse-btn {
+    display: block;
+    text-align: center;
+  }
+}
+
 .content-in-item {
   display: flex;
   flex-direction: column;
@@ -93,24 +111,6 @@
       background-color: rgb(228, 228, 228);
       border-radius: 5px;
     }
-  }
-}
-
-.collapsed {
-  width: 7% !important;
-  transition: all 0.3s ease-in-out;
-
-  .content-in-item {
-    display: none;
-  }
-
-  .content {
-    display: none;
-  }
-
-  .collapse-btn {
-    display: block;
-    text-align: center;
   }
 }
 

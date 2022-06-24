@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-container">
+  <div class="sidebar-container" :class="{ collapsed: isCollapsed }">
     <ul class="list-sidebar">
       <li>
         <RouterLink :to="{ name: 'home' }" class="item-sidebar wider">
@@ -96,15 +96,16 @@ const getCurrentWidthPage = () => {
 
 <style lang="scss">
 .sidebar-container {
-  width: 100%;
-  background-color: rgb(240, 240, 240);
+  position: fixed;
+  width: 18%;
   height: 100vh;
-  display: flex;
+  background-color: rgb(240, 240, 240);
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0 .5rem;
+  padding: 0 .4rem;
   z-index: 50;
+  transition: all 0.3s ease-in-out;
 
   .list-sidebar {
     width: 100%;
@@ -155,13 +156,14 @@ const getCurrentWidthPage = () => {
   }
 
   .collapse-btn {
+    position: absolute;
     display: flex;
-    overflow: hidden;
     width: 100%;
-    height: 6%;
     align-items: center;
     gap: 1rem;
     padding: .7rem 1rem;
+    bottom: 3.6rem;
+    left: 0;
     cursor: pointer;
 
     &:hover {

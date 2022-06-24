@@ -4,10 +4,10 @@
   </header>
   <main>
     <div class="main-container">
-      <aside class="sidebar" :class="{ collapsed: isCollapsed, 'toggle-sidebar-mobile': store.getters.toggleSidebar }">
+      <aside class="sidebar" :class="{ 'toggle-sidebar-mobile': store.getters.toggleSidebar }">
         <Sidebar :isCollapsed="isCollapsed" @collapsedSidebar="collapsed" @changeIconCollapsed="changeCollapsed" />
       </aside>
-      <div class="view-pages">
+      <div class="view-pages" :class="{ 'change-width-page': isCollapsed }">
         <RouterView />
       </div>
     </div>
@@ -18,11 +18,16 @@
 import Navigation from './components/Navigation.vue';
 import Sidebar from './components/Sidebar.vue';
 import { RouterView } from 'vue-router'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
 const isCollapsed = ref(false);
+const widthPage = ref();
+
+onMounted(() => {
+  window.addEventListener("resize", getCurrentWidthPage)
+});
 
 const collapsed = () => {
   isCollapsed.value = !isCollapsed.value;
@@ -30,6 +35,13 @@ const collapsed = () => {
 
 const changeCollapsed = () => {
   isCollapsed.value = true
+}
+
+const getCurrentWidthPage = () => {
+  widthPage.value = window.innerWidth;
+  if (widthPage.value >= 1200) {
+    isCollapsed.value = false;
+  }
 }
 
 </script>
@@ -48,94 +60,132 @@ const changeCollapsed = () => {
 }
 
 .main-container {
-  position: absolute;
-  display: flex;
-  width: 100%;
-  height: 100%;
+  position: relative;
   top: 3.5rem;
 
   .sidebar {
-    width: 19%;
-    transition: all 0.3s ease-in-out;
+    width: 20%;
   }
 
   .view-pages {
     width: 100%;
-    display: block;
-    margin: 0 auto;
-    padding: .5rem 1rem;
-    font-size: .850rem;
+    padding: .5rem 0;
+    font-size: .825rem;
+    padding-right: 4%;
+    padding-left: 23%;
+    transition: padding-left .3s;
   }
+
 }
 
 main {
   .main-container {
     .toggle-sidebar-mobile {
-      left: 0;
+      left: 0 !important;
+    }
+  }
+}
+
+main {
+  .main-container {
+    .change-width-page {
+      padding-left: 7rem;
+      transition: padding-left .3s;
     }
   }
 }
 
 @media screen and (max-width:1632px) {
-  .view-pages {
-    padding: .5rem 7rem;
+  .main-container {
+
+    .view-pages {
+      padding-left: 19%;
+      padding-right: 1rem;
+    }
   }
 }
 
 @media screen and (max-width:1200px) {
-  .main-container {
-    .sidebar {
-      width: 7%;
-      transition: all 0.2s ease-in-out;
+  main {
+    .main-container {
+      .sidebar {
+        width: 7%;
+        transition: all 0.2s ease-in-out;
 
-      .sidebar-container {
-        .list-sidebar {
-          .content-in-item {
-            visibility: hidden;
+        .sidebar-container {
+          .list-sidebar {
+            .content-in-item {
+              visibility: hidden;
+            }
+
+            .content {
+              display: none;
+            }
           }
 
-          .content {
-            display: none;
+          .collapse-btn {
+            .content {
+              display: none;
+            }
           }
         }
+      }
 
-        .collapse-btn {
-          .content {
-            display: none;
-          }
-        }
+      .view-pages {
+        padding-left: 5rem;
       }
     }
   }
 }
 
 @media screen and (max-width:767px) {
-  .main-container {
-    .sidebar {
-      background-color: rgba(0, 0, 0, 0.2);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      left: -100%;
-      z-index: 2;
+  main {
+    .main-container {
+      .sidebar {
+        background-color: rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 3.4rem;
+        left: -100%;
+        width: 100%;
 
-      .sidebar-container {
-        width: 55%;
+        z-index: 2;
 
-        .list-sidebar {
-          li {
-            width: 100%;
+        .sidebar-container {
+          width: 60%;
+
+          .list-sidebar {
+            li {
+              .item-sidebar {
+                .content {
+                  display: flex;
+                  justify-content: space-between;
+                }
+              }
+            }
+
+            .tooltip-issues {
+              width: 100%;
+
+              .content-in-item {
+                visibility: visible;
+              }
+
+            }
           }
 
-          .content-in-item {
-            visibility: visible;
-          }
+          .collapse-btn {
+            display: block;
+            text-align: left;
 
-          .content {
-            display: flex;
-            justify-content: space-between;
+            :first-child {
+              margin-right: .5rem;
+            }
           }
         }
+      }
+
+      .view-pages {
+        padding-left: 1rem;
       }
     }
   }

@@ -332,8 +332,6 @@ const orderByUpdateDate = () => {
 <style lang="scss">
 .main-page {
   position: relative;
-  width: 100%;
-  display: flex;
 
   .issuable-container {
     width: 100%;
@@ -666,7 +664,6 @@ const orderByUpdateDate = () => {
 
             .btn-group {
               width: 100%;
-              height: 97%;
             }
           }
         }

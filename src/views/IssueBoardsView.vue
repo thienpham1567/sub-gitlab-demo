@@ -111,6 +111,7 @@ const closedIssues = computed(() => store.getters.closedIssues);
 
 const toggleMenu = () => {
   store.dispatch('toggle_menu');
+  console.log("ffff");
 }
 
 const dragStart = (event, issue) => {
