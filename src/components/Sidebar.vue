@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-container" :class="{ collapsed: isCollapsed }">
+  <div class="sidebar-container" :class="{ collapsed: isCollapsed, uncollapsed: !isCollapsed }">
     <ul class="list-sidebar">
       <li>
         <RouterLink :to="{ name: 'home' }" class="item-sidebar wider">
@@ -25,7 +25,7 @@
             <RouterLink :to="{ name: 'issue-boards' }">Boards</RouterLink>
           </li>
         </ul>
-        <div class="content-tooltip">
+        <!-- <div class="content-tooltip">
           <div class="content-title">
             <span class="title">Issues</span>
             <span class="counter">{{ lengthIssuesList }}</span>
@@ -38,7 +38,7 @@
               <RouterLink :to="{ name: 'issue-boards' }">Boards</RouterLink>
             </li>
           </ul>
-        </div>
+        </div> -->
       </li>
     </ul>
     <div v-if="!store.getters.toggleSidebar" class="collapse-btn" @click.prevent="makeCollapsed">
@@ -100,16 +100,12 @@ const getCurrentWidthPage = () => {
   width: 18%;
   height: 100vh;
   background-color: rgb(240, 240, 240);
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   padding: 0 .4rem;
   z-index: 50;
   transition: all 0.3s ease-in-out;
 
   .list-sidebar {
     width: 100%;
-    height: 94%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,19 +125,19 @@ const getCurrentWidthPage = () => {
     .item-sidebar {
       display: flex;
       align-items: center;
-      padding: 0 .5rem;
+      justify-content: center;
 
       .icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 2.2rem;
+        height: 2.2rem;
       }
 
       .shortcut {
-        width: 2.7rem;
-        height: 2.7rem;
+        width: 2.2rem;
+        height: 2.2rem;
         background-color: rgb(255, 223, 229);
         border-radius: 5px;
         border: 1px solid rgb(218, 218, 218);
@@ -173,6 +169,44 @@ const getCurrentWidthPage = () => {
 }
 
 @media screen and (max-width:1200px) {
+
+  // Uncollapsed, when width page is in 1200px
+  main {
+    .main-container {
+      .sidebar {
+        .uncollapsed {
+          position: fixed;
+          width: 23%;
+          transition: all 0.3s ease-in-out;
+
+          .list-sidebar {
+            align-items: flex-start;
+
+            li {
+              .item-sidebar {
+                .content {
+                  display: block;
+                }
+              }
+            }
+
+            .tooltip-issues {
+              .content-in-item {
+                visibility: visible;
+              }
+            }
+          }
+
+          .collapse-btn {
+            .content {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .sidebar-container {
 
     .list-sidebar {
@@ -223,6 +257,74 @@ const getCurrentWidthPage = () => {
     }
   }
 }
+
+@media screen and (max-width:990px) {
+
+  // Uncollapsed, when width page is in 990px
+  main {
+    .main-container {
+      .sidebar {
+        .uncollapsed {
+          width: 30%;
+          transition: all 0.3s ease-in-out;
+
+          .list-sidebar {}
+        }
+      }
+    }
+  }
+
+  .sidebar-container {
+    .list-sidebar {
+      .tooltip-issues {
+        position: relative;
+        width: 100%;
+        z-index: 10;
+
+        .content-tooltip {
+
+          .content-title {
+            position: absolute;
+            background-color: rgb(202, 202, 202);
+            border-radius: 5px 5px 0px 0px;
+            left: 0;
+            top: 0;
+            width: 12rem;
+            height: 2rem;
+            text-align: center;
+            padding-top: .2rem;
+          }
+
+          position: absolute;
+          visibility: hidden;
+          display: block;
+          align-items: center;
+          justify-content: center;
+          top: -.4rem;
+          left: 105%;
+          width: 12rem;
+          background-color: white;
+          border-radius: 5px;
+          padding: 2.5rem .5rem .5rem .5rem;
+          margin-top: .11rem;
+          box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        &:hover {
+          .content-tooltip {
+            visibility: visible;
+
+            .content-in-item {
+              visibility: visible;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 @media screen and (max-width:767px) {
   .sidebar-container {

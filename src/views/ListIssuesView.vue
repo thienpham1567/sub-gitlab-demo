@@ -1,6 +1,6 @@
 <template>
   <div class="main-page">
-    <div class="issuable-container">
+    <div class="issuable-list-container">
       <ul class="bread-crumb">
         <button @click.prevent="toggleMenu" class="bars-menu"><i class="fa-solid fa-bars"></i></button>
         <li>Pham Ngoc Thien</li>
@@ -11,127 +11,125 @@
           </RouterLink>
         </li>
       </ul>
-      <div class="issuable-list-container">
-        <div class="top-area">
-          <ul class="issuable-list-states">
-            <li @click="toggleIssueStateOpen" ref="openState" class="item-state">
-              <span>Open</span>
-              <span>{{ openIssues.length }}</span>
-            </li>
-            <li @click="toggleIssueStateClosed" ref="closedState" class="item-state">
-              <span>Closed</span>
-              <span>{{ closedIssues.length }}</span>
-            </li>
-            <li @click="toggleIssueStateAll" ref="allState" class="item-state">
-              <span>All</span>
-              <span>{{ issuesList.length }}</span>
-            </li>
-          </ul>
-          <div class="nav-controls">
-            <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
-              <i class="fa-solid fa-wifi"></i>
-            </RouterLink>
-            <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
-              <i class="fa-solid fa-calendar-week"></i>
-            </RouterLink>
-            <div class="import-export">
-              <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
-                <i class="fa-solid fa-file-import"></i>
-              </RouterLink>
-              <RouterLink :to="{ name: 'home' }" class="btn-group border-light-grey square-right">
-                <i class="fa-solid fa-file-export"></i>
-                <i class="fa-solid fa-chevron-down"></i>
-              </RouterLink>
-            </div>
-            <button @click="editIssues" :disabled="makeEditBtnDisable" class="btn issue-btn border-light-grey"
-              :class="{ 'disable-btn': makeEditBtnDisable }">
-              Edit issues
-            </button>
-            <RouterLink :to="{ name: 'create-issues' }" class="btn issue-btn new-btn">New issus</RouterLink>
-          </div>
-        </div>
-        <div class="filtered-search-input-container">
-          <input @change="makeAllChecked" v-show="isClickedEditIssues" type="checkbox" ref="checkAll">
-          <div class="issuable-search-container">
-            <div class="btn-group square-right border-grey search-history">
-              <i class="fa-solid fa-clock-rotate-left"></i>
-              <i class="fa-solid fa-chevron-down"></i>
-            </div>
-            <div class="filtered-search-input">
-              <input type="text" v-model="searchInput" placeholder="Search or filter results...">
-              <i @click="clearInput" v-show="searchInput.length > 0" class="fa-solid fa-circle-xmark clear-input"></i>
-            </div>
-            <div @click="toggleSearch" class="btn btn-helper">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-          </div>
-          <div class="sort-dropdown-container">
-            <div class="btn-group square-right border-grey">
-              <span ref="sortBy"></span>
-              <i class="fa-solid fa-chevron-down"></i>
-              <ul class="dropdown-content">
-                <li @click="orderByTitle">Title</li>
-                <li @click="orderByCreateDate">Created date</li>
-                <li @click="orderByUpdateDate">Updated date</li>
-              </ul>
-            </div>
-            <div @click="changeOrderIssues" class="btn btn-helper">
-              <i v-if="isAscOrder" class="fa-solid fa-arrow-up-short-wide"></i>
-              <i v-else class="fa-solid fa-arrow-down-wide-short"></i>
-            </div>
-          </div>
-        </div>
-        <ul v-if="issuesStatePresent.issues.length > 0" class="issues-list">
-          <li v-for="(issue, index) in issuesStatePresent.issues" :key="issue.id" class="issue">
-            <div class="issuable-main-info">
-              <input v-show="isClickedEditIssues" type="checkbox" :value="index" v-model="checkedItems">
-              <div class="issue-title">
-                <RouterLink :to="{ name: 'home' }">{{ issue.title }}</RouterLink>
-              </div>
-              <div class="issuable-info">
-                <span>#{{ index + 1 }}</span>
-                <span>.</span>
-                <span>created 5 days ago by Thien Pham Ngoc</span>
-              </div>
-            </div>
-            <div class="issuable-meta">
-              <div class="comments">
-                <span v-if="!issue.status">CLOSED</span>
-                <i class="fa-solid fa-comments"></i>
-                <span>0</span>
-              </div>
-              <div class="update-history">
-                <span>updated just now</span>
-              </div>
-            </div>
+      <div class="top-area">
+        <ul class="issuable-list-states">
+          <li @click="toggleIssueStateOpen" ref="openState" class="item-state">
+            <span>Open</span>
+            <span>{{ openIssues.length }}</span>
+          </li>
+          <li @click="toggleIssueStateClosed" ref="closedState" class="item-state">
+            <span>Closed</span>
+            <span>{{ closedIssues.length }}</span>
+          </li>
+          <li @click="toggleIssueStateAll" ref="allState" class="item-state">
+            <span>All</span>
+            <span>{{ issuesList.length }}</span>
           </li>
         </ul>
-        <div v-else-if="issuesStatePresent.presentState === 'open'" class="none-of-issues">
-          <embed class="img"
-            src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
-            type="">
-          <h1>There are no open issues</h1>
-          <p>To keep this project going, create a new issue</p>
-          <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
+        <div class="nav-controls">
+          <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
+            <i class="fa-solid fa-wifi"></i>
+          </RouterLink>
+          <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
+            <i class="fa-solid fa-calendar-week"></i>
+          </RouterLink>
+          <div class="import-export">
+            <RouterLink :to="{ name: 'home' }" class="btn border-light-grey">
+              <i class="fa-solid fa-file-import"></i>
+            </RouterLink>
+            <RouterLink :to="{ name: 'home' }" class="btn-group border-light-grey square-right">
+              <i class="fa-solid fa-file-export"></i>
+              <i class="fa-solid fa-chevron-down"></i>
+            </RouterLink>
+          </div>
+          <button @click="editIssues" :disabled="makeEditBtnDisable" class="btn issue-btn border-light-grey"
+            :class="{ 'disable-btn': makeEditBtnDisable }">
+            Edit issues
+          </button>
+          <RouterLink :to="{ name: 'create-issues' }" class="btn issue-btn new-btn">New issus</RouterLink>
         </div>
-        <div v-else-if="issuesStatePresent.presentState === 'searchResults'" class="none-of-issues">
-          <embed class="img"
-            src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
-            type="">
-          <h1>Sorry, your filter produced no results</h1>
-          <p>To widen your search, change or remove filters above</p>
-          <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
+      </div>
+      <div class="filtered-search-input-container">
+        <input @change="makeAllChecked" v-show="isClickedEditIssues" type="checkbox" ref="checkAll">
+        <div class="issuable-search-container">
+          <div class="btn-group square-right border-grey search-history">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="filtered-search-input">
+            <input type="text" v-model="searchInput" placeholder="Search or filter results...">
+            <i @click="clearInput" v-show="searchInput.length > 0" class="fa-solid fa-circle-xmark clear-input"></i>
+          </div>
+          <div @click="toggleSearch" class="btn btn-helper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
         </div>
-        <div v-else class="none-of-issues">
-          <embed class="img"
-            src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
-            type="">
-          <h1>There are no closed issues</h1>
+        <div class="sort-dropdown-container">
+          <div class="btn-group square-right border-grey">
+            <span ref="sortBy"></span>
+            <i class="fa-solid fa-chevron-down"></i>
+            <ul class="dropdown-content">
+              <li @click="orderByTitle">Title</li>
+              <li @click="orderByCreateDate">Created date</li>
+              <li @click="orderByUpdateDate">Updated date</li>
+            </ul>
+          </div>
+          <div @click="changeOrderIssues" class="btn btn-helper">
+            <i v-if="isAscOrder" class="fa-solid fa-arrow-up-short-wide"></i>
+            <i v-else class="fa-solid fa-arrow-down-wide-short"></i>
+          </div>
         </div>
-        <div></div>
-        <div class="link">
-          <button class="btn btn-link">Email a new issue to this project</button>
-        </div>
+      </div>
+      <ul v-if="issuesStatePresent.issues.length > 0" class="issues-list">
+        <li v-for="(issue, index) in issuesStatePresent.issues" :key="issue.id" class="issue">
+          <div class="issuable-main-info">
+            <input v-show="isClickedEditIssues" type="checkbox" :value="index" v-model="checkedItems">
+            <div class="issue-title">
+              <RouterLink :to="{ name: 'home' }">{{ issue.title }}</RouterLink>
+            </div>
+            <div class="issuable-info">
+              <span>#{{ index + 1 }}</span>
+              <span>.</span>
+              <span>created 5 days ago by Thien Pham Ngoc</span>
+            </div>
+          </div>
+          <div class="issuable-meta">
+            <div class="comments">
+              <span v-if="!issue.status">CLOSED</span>
+              <i class="fa-solid fa-comments"></i>
+              <span>0</span>
+            </div>
+            <div class="update-history">
+              <span>updated just now</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div v-else-if="issuesStatePresent.presentState === 'open'" class="none-of-issues">
+        <embed class="img"
+          src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
+          type="">
+        <h1>There are no open issues</h1>
+        <p>To keep this project going, create a new issue</p>
+        <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
+      </div>
+      <div v-else-if="issuesStatePresent.presentState === 'searchResults'" class="none-of-issues">
+        <embed class="img"
+          src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
+          type="">
+        <h1>Sorry, your filter produced no results</h1>
+        <p>To widen your search, change or remove filters above</p>
+        <RouterLink :to="{ name: 'create-issues' }" class="issue-btn new-btn">New issus</RouterLink>
+      </div>
+      <div v-else class="none-of-issues">
+        <embed class="img"
+          src="https://gitlab.com/assets/illustrations/issues-b4cb30d5143b86be2f594c7a384296dfba0b25199db87382c3746b79dafd6161.svg"
+          type="">
+        <h1>There are no closed issues</h1>
+      </div>
+      <div></div>
+      <div class="link">
+        <button class="btn btn-link">Email a new issue to this project</button>
       </div>
     </div>
     <div class="issuable-update-sidebar" :class="{ edit: isClickedEditIssues }">
@@ -332,234 +330,232 @@ const orderByUpdateDate = () => {
 <style lang="scss">
 .main-page {
   position: relative;
+  display: flex;
 
-  .issuable-container {
+  .issuable-list-container {
     width: 100%;
+    display: block;
+    color: rgb(85, 85, 85);
 
-    .issuable-list-container {
+    .top-area {
+      display: flex;
+      border-top: 1px solid rgb(225, 225, 225);
+      border-bottom: 1px solid rgb(225, 225, 225);
+
+      .issuable-list-states {
+        width: 100%;
+        display: flex;
+
+        .item-state {
+          list-style: none;
+          padding: 1rem .7rem;
+          cursor: pointer;
+          border: 2px solid white;
+
+          &:hover {
+            border-bottom: 2px solid rgb(199, 199, 199);
+          }
+
+          :first-child {
+            margin-right: .4rem;
+          }
+
+          :nth-child(2) {
+            padding: 0 .4rem;
+            border-radius: 10px;
+            background-color: rgb(218, 218, 218);
+          }
+        }
+      }
+
+      .nav-controls {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: .5rem;
+
+        a {
+          color: rgb(85, 85, 85);
+          text-decoration: none;
+        }
+
+        .import-export {
+          display: flex;
+
+          :nth-child(1) {
+            border-radius: 5px 0px 0px 5px;
+          }
+
+          :nth-child(2) {
+            border-radius: 0px 5px 5px 0px;
+            border: 1px solid rgb(216, 216, 216);
+            border-left: none;
+
+            i {
+              border: none;
+            }
+          }
+        }
+      }
+    }
+
+    .filtered-search-input-container {
       width: 100%;
-      display: block;
-      color: rgb(85, 85, 85);
+      display: flex;
+      background-color: rgb(247, 247, 247);
+      border-bottom: 1px solid rgb(225, 225, 225);
+      gap: 1rem;
+      padding: 1.1rem;
 
-      .top-area {
+      .issuable-search-container {
         display: flex;
-        border-top: 1px solid rgb(225, 225, 225);
-        border-bottom: 1px solid rgb(225, 225, 225);
-
-        .issuable-list-states {
-          width: 100%;
-          display: flex;
-
-          .item-state {
-            list-style: none;
-            padding: 1rem .7rem;
-            cursor: pointer;
-            border: 2px solid white;
-
-            &:hover {
-              border-bottom: 2px solid rgb(199, 199, 199);
-            }
-
-            :first-child {
-              margin-right: .4rem;
-            }
-
-            :nth-child(2) {
-              padding: 0 .4rem;
-              border-radius: 10px;
-              background-color: rgb(218, 218, 218);
-            }
-          }
-        }
-
-        .nav-controls {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          gap: .5rem;
-
-          a {
-            color: rgb(85, 85, 85);
-            text-decoration: none;
-          }
-
-          .import-export {
-            display: flex;
-
-            :nth-child(1) {
-              border-radius: 5px 0px 0px 5px;
-            }
-
-            :nth-child(2) {
-              border-radius: 0px 5px 5px 0px;
-              border: 1px solid rgb(216, 216, 216);
-              border-left: none;
-
-              i {
-                border: none;
-              }
-            }
-          }
-        }
-      }
-
-      .filtered-search-input-container {
+        background-color: white;
         width: 100%;
-        display: flex;
-        background-color: rgb(247, 247, 247);
-        border-bottom: 1px solid rgb(225, 225, 225);
-        gap: 1rem;
-        padding: 1.1rem;
 
-        .issuable-search-container {
-          display: flex;
-          background-color: white;
-          width: 100%;
-
-          .filtered-search-input {
-            position: relative;
-
-            .clear-input {
-              cursor: pointer;
-              font-size: 1.275rem;
-              position: absolute;
-              top: .6rem;
-              right: .4rem;
-            }
-          }
-
-          .search-history {
-            width: 9%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            &:hover {
-              background-color: rgb(226, 226, 226);
-            }
-
-            :nth-child(1) {
-              font-size: 1.1rem;
-            }
-
-            :nth-child(2) {
-              font-size: .7rem;
-            }
-          }
-        }
-
-        .sort-dropdown-container {
-          display: flex;
+        .filtered-search-input {
           position: relative;
-          z-index: 1;
-          width: 20%;
 
-          span {
-            margin-right: auto;
-          }
-
-          .btn-group {
-            width: 100%;
-
-            &:hover {
-              .dropdown-content {
-                display: flex;
-              }
-            }
+          .clear-input {
+            cursor: pointer;
+            font-size: 1.275rem;
+            position: absolute;
+            top: .6rem;
+            right: .4rem;
           }
         }
-      }
 
-      .issues-list {
-        background-color: rgb(250, 250, 250);
-        width: 100%;
-        list-style: none;
-
-        .issue {
+        .search-history {
+          width: 9%;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: .8rem 1rem;
-          border-bottom: 1px solid rgb(216, 216, 216);
-
-
-          .issuable-main-info {
-
-            .issuable-title,
-            a {
-              display: block;
-              text-decoration: none;
-              color: black;
-              margin-bottom: .2rem;
-
-              &:hover {
-                text-decoration: underline;
-                color: rgb(0, 68, 255);
-              }
-
-            }
-
-            .issuable-info {
-              span {
-                margin-right: .3rem;
-              }
-            }
-          }
-
-          .issuable-meta {
-            display: flex;
-            flex-direction: column;
-            gap: .4rem;
-
-            .comments {
-              display: flex;
-              align-items: center;
-              justify-content: flex-end;
-              gap: .3rem;
-
-              :first-child {
-                margin-right: .5rem;
-              }
-            }
-          }
-
-        }
-      }
-
-      .none-of-issues {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem 0;
-        gap: 1rem;
-
-        .img {
-          width: 17rem;
-        }
-      }
-
-      .link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem 0;
-
-        .btn-link {
-          border: none;
-          width: 15rem;
-          color: rgb(0, 68, 255);
 
           &:hover {
-            text-decoration: underline;
-            background-color: white;
+            background-color: rgb(226, 226, 226);
+          }
+
+          :nth-child(1) {
+            font-size: 1.1rem;
+          }
+
+          :nth-child(2) {
+            font-size: .7rem;
           }
         }
       }
 
+      .sort-dropdown-container {
+        display: flex;
+        position: relative;
+        z-index: 1;
+        width: 20%;
+
+        span {
+          margin-right: auto;
+        }
+
+        .btn-group {
+          width: 100%;
+
+          &:hover {
+            .dropdown-content {
+              display: flex;
+            }
+          }
+        }
+      }
     }
+
+    .issues-list {
+      background-color: rgb(250, 250, 250);
+      width: 100%;
+      list-style: none;
+
+      .issue {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .8rem 1rem;
+        border-bottom: 1px solid rgb(216, 216, 216);
+
+
+        .issuable-main-info {
+
+          .issuable-title,
+          a {
+            display: block;
+            text-decoration: none;
+            color: black;
+            margin-bottom: .2rem;
+
+            &:hover {
+              text-decoration: underline;
+              color: rgb(0, 68, 255);
+            }
+
+          }
+
+          .issuable-info {
+            span {
+              margin-right: .3rem;
+            }
+          }
+        }
+
+        .issuable-meta {
+          display: flex;
+          flex-direction: column;
+          gap: .4rem;
+
+          .comments {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: .3rem;
+
+            :first-child {
+              margin-right: .5rem;
+            }
+          }
+        }
+
+      }
+    }
+
+    .none-of-issues {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 0;
+      gap: 1rem;
+
+      .img {
+        width: 17rem;
+      }
+    }
+
+    .link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 0;
+
+      .btn-link {
+        border: none;
+        width: 15rem;
+        color: rgb(0, 68, 255);
+
+        &:hover {
+          text-decoration: underline;
+          background-color: white;
+        }
+      }
+    }
+
   }
+
 
   .issuable-update-sidebar {
     visibility: hidden;

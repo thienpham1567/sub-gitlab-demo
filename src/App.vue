@@ -109,9 +109,6 @@ main {
   main {
     .main-container {
       .sidebar {
-        width: 7%;
-        transition: all 0.2s ease-in-out;
-
         .sidebar-container {
           .list-sidebar {
             .content-in-item {
@@ -122,11 +119,11 @@ main {
               display: none;
             }
           }
+        }
 
-          .collapse-btn {
-            .content {
-              display: none;
-            }
+        .collapse-btn {
+          .content {
+            display: none;
           }
         }
       }
@@ -155,6 +152,8 @@ main {
 
           .list-sidebar {
             li {
+              width: inherit;
+
               .item-sidebar {
                 .content {
                   display: flex;
