@@ -25,7 +25,7 @@
             <RouterLink :to="{ name: 'issue-boards' }">Boards</RouterLink>
           </li>
         </ul>
-        <!-- <div class="content-tooltip">
+        <div class="content-tooltip">
           <div class="content-title">
             <span class="title">Issues</span>
             <span class="counter">{{ lengthIssuesList }}</span>
@@ -38,7 +38,7 @@
               <RouterLink :to="{ name: 'issue-boards' }">Boards</RouterLink>
             </li>
           </ul>
-        </div> -->
+        </div>
       </li>
     </ul>
     <div v-if="!store.getters.toggleSidebar" class="collapse-btn" @click.prevent="makeCollapsed">
@@ -191,6 +191,10 @@ const getCurrentWidthPage = () => {
             }
 
             .tooltip-issues {
+              .content-tooltip {
+                display: none;
+              }
+
               .content-in-item {
                 visibility: visible;
               }
@@ -216,6 +220,19 @@ const getCurrentWidthPage = () => {
         z-index: 10;
 
         .content-tooltip {
+          position: absolute;
+          visibility: hidden;
+          display: block;
+          align-items: center;
+          justify-content: center;
+          top: -.4rem;
+          left: 3.2rem;
+          width: 12rem;
+          background-color: white;
+          border-radius: 5px;
+          padding: 2.5rem .5rem .5rem .5rem;
+          margin-top: .11rem;
+          box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
 
           .content-title {
             position: absolute;
@@ -228,20 +245,6 @@ const getCurrentWidthPage = () => {
             text-align: center;
             padding-top: .2rem;
           }
-
-          position: absolute;
-          visibility: hidden;
-          display: block;
-          align-items: center;
-          justify-content: center;
-          top: -.4rem;
-          left: 105%;
-          width: 12rem;
-          background-color: white;
-          border-radius: 5px;
-          padding: 2.5rem .5rem .5rem .5rem;
-          margin-top: .11rem;
-          box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
         }
 
         &:hover {
@@ -250,6 +253,7 @@ const getCurrentWidthPage = () => {
 
             .content-in-item {
               visibility: visible;
+              display: block;
             }
           }
         }
@@ -269,55 +273,6 @@ const getCurrentWidthPage = () => {
           transition: all 0.3s ease-in-out;
 
           .list-sidebar {}
-        }
-      }
-    }
-  }
-
-  .sidebar-container {
-    .list-sidebar {
-      .tooltip-issues {
-        position: relative;
-        width: 100%;
-        z-index: 10;
-
-        .content-tooltip {
-
-          .content-title {
-            position: absolute;
-            background-color: rgb(202, 202, 202);
-            border-radius: 5px 5px 0px 0px;
-            left: 0;
-            top: 0;
-            width: 12rem;
-            height: 2rem;
-            text-align: center;
-            padding-top: .2rem;
-          }
-
-          position: absolute;
-          visibility: hidden;
-          display: block;
-          align-items: center;
-          justify-content: center;
-          top: -.4rem;
-          left: 105%;
-          width: 12rem;
-          background-color: white;
-          border-radius: 5px;
-          padding: 2.5rem .5rem .5rem .5rem;
-          margin-top: .11rem;
-          box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        &:hover {
-          .content-tooltip {
-            visibility: visible;
-
-            .content-in-item {
-              visibility: visible;
-            }
-          }
         }
       }
     }

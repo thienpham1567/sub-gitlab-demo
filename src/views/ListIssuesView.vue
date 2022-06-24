@@ -645,7 +645,6 @@ const orderByUpdateDate = () => {
 
 @media screen and (max-width:767px) {
   .main-page {
-
     .bread-crumb {
       .bars-menu {
         display: inline-block;
@@ -701,6 +700,26 @@ const orderByUpdateDate = () => {
             justify-content: space-between;
             width: 100%;
           }
+        }
+      }
+    }
+
+    .issues-list {
+      .issue {
+        .issuable-main-info {
+          .issuable-info {
+            :nth-child(2) {
+              display: none;
+            }
+
+            :last-child {
+              display: none;
+            }
+          }
+        }
+
+        .issuable-meta {
+          visibility: hidden;
         }
       }
     }
